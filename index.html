@@ -1,0 +1,2382 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#eef6ff">
+<title>AsamBasa Lab — Teori Asam Basa Kelas 11</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;min-height:100%}
+body{
+  font-family:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',sans-serif;
+  color:#1a2340;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  background:linear-gradient(160deg,#eef6ff 0%,#fff8ee 45%,#f0e9ff 100%);
+  background-attachment:fixed;
+}
+:root{
+  --asam:#ff6b35;--asam2:#ffa94d;
+  --basa:#4f7cff;--basa2:#a855f7;
+  --ok:#10b981;--bad:#ef4444;--warn:#f59e0b;
+  --card:rgba(255,255,255,0.92);
+  --card2:rgba(255,255,255,0.75);
+  --line:rgba(120,140,200,0.2);
+  --txt:#1a2340;--muted:#6b7a9a;
+  --r:18px;
+  --shadow:0 6px 20px -6px rgba(80,100,180,0.15);
+  --shadow2:0 12px 32px -10px rgba(80,100,180,0.22);
+}
+#glbg{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block;opacity:.55}
+#fx{position:fixed;inset:0;width:100%;height:100%;z-index:90;pointer-events:none}
+#app{position:relative;z-index:10;max-width:560px;margin:0 auto;padding:0 16px 110px}
+button,input,select{font-family:inherit}
+button{cursor:pointer;border:none;outline:none}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-thumb{background:rgba(120,140,200,.35);border-radius:4px}
+
+/* TOPBAR */
+#topbar{
+  position:sticky;top:0;z-index:50;display:none;align-items:center;gap:10px;
+  padding:10px 16px;margin:0 -16px 14px;
+  background:rgba(255,255,255,.85);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+#topbar.show{display:flex}
+.brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:14.5px;letter-spacing:.2px;color:#1a2340;min-width:0}
+.brand .flask{font-size:19px;filter:drop-shadow(0 2px 4px rgba(255,107,53,.4))}
+.brand>span{display:flex;flex-direction:column;min-width:0}
+.brand small{font-size:9px;font-weight:700;color:var(--muted);letter-spacing:1.2px;margin-top:1px}
+.spacer{flex:1}
+.chip{
+  display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;
+  background:rgba(79,124,255,.1);border:1px solid rgba(79,124,255,.25);
+  color:#3355cc;border-radius:999px;padding:5px 10px;
+  max-width:130px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
+}
+.icon-btn{
+  width:38px;height:38px;border-radius:12px;background:#fff;
+  border:1px solid var(--line);color:#1a2340;font-size:15px;
+  display:grid;place-items:center;transition:.15s;box-shadow:var(--shadow);flex:none;
+}
+.icon-btn:active{transform:scale(.92)}
+.icon-btn.on{background:rgba(255,107,53,.15);border-color:rgba(255,107,53,.4)}
+
+/* SCREENS */
+.screen{display:none;animation:fadeUp .32s ease}
+.screen.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* CARDS */
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  padding:18px;margin-bottom:14px;backdrop-filter:blur(10px);box-shadow:var(--shadow);
+}
+.card.tight{padding:14px}
+h1{font-size:22px;margin:6px 0 4px;line-height:1.25;color:#1a2340}
+h2{font-size:16.5px;margin:0 0 12px;display:flex;align-items:center;gap:8px;color:#1a2340;line-height:1.3}
+h3{font-size:14px;margin:14px 0 8px;color:#2c3a5c;line-height:1.35}
+p{font-size:13.5px;line-height:1.7;color:#3a4a6c;margin:8px 0}
+.muted{color:var(--muted)}
+.small{font-size:11.5px;line-height:1.55}
+.tiny{font-size:10.5px;line-height:1.5}
+.center{text-align:center}
+.asam-t{color:var(--asam)}
+.basa-t{color:var(--basa)}
+.ok-t{color:var(--ok)}
+.bad-t{color:var(--bad)}
+
+/* BUTTONS */
+.btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 16px;border-radius:14px;font-size:14px;font-weight:700;
+  background:#fff;color:#1a2340;border:1px solid var(--line);
+  transition:.16s;width:100%;box-shadow:var(--shadow);line-height:1.3;
+}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:linear-gradient(135deg,var(--asam),var(--asam2));color:#fff;border:none;box-shadow:0 8px 22px -8px rgba(255,107,53,.6)}
+.btn.blue{background:linear-gradient(135deg,var(--basa),var(--basa2));color:#fff;border:none;box-shadow:0 8px 22px -8px rgba(79,124,255,.6)}
+.btn.green{background:linear-gradient(135deg,#0d9f78,var(--ok));color:#fff;border:none;box-shadow:0 8px 22px -8px rgba(16,185,129,.55)}
+.btn.ghost{background:#fff;border:1px solid var(--line)}
+.btn.danger{background:linear-gradient(135deg,#dc2626,var(--bad));color:#fff;border:none}
+.btn.sm{padding:10px 14px;font-size:12.5px;border-radius:12px;width:auto}
+.btn:disabled{opacity:.5;pointer-events:none}
+.btn-row{display:flex;gap:10px}
+.btn-row .btn{flex:1}
+
+/* LOGIN */
+.login-hero{text-align:center;padding:30px 0 14px}
+.login-hero .logo{
+  font-size:60px;line-height:1;
+  filter:drop-shadow(0 8px 20px rgba(255,107,53,.35));
+  animation:float 3.4s ease-in-out infinite;
+}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.login-hero h1{
+  background:linear-gradient(100deg,#ff6b35,#ffa94d 30%,#a855f7 65%,#4f7cff);
+  -webkit-background-clip:text;background-clip:text;color:transparent;font-size:26px;
+  margin-top:8px;
+}
+.tabs{
+  display:flex;background:rgba(255,255,255,.6);border:1px solid var(--line);
+  border-radius:14px;padding:5px;margin-bottom:16px;box-shadow:inset 0 1px 3px rgba(80,100,180,.06);
+}
+.tabs button{
+  flex:1;padding:11px;border-radius:11px;background:transparent;color:var(--muted);
+  font-size:12.5px;font-weight:700;transition:.2s;
+}
+.tabs button.active{background:linear-gradient(135deg,var(--asam),var(--asam2));color:#fff;box-shadow:0 4px 12px -4px rgba(255,107,53,.5)}
+label.fl{
+  display:block;font-size:11px;font-weight:800;color:#3a4a6c;
+  margin:14px 0 6px;letter-spacing:.5px;text-transform:uppercase;
+}
+input.fi,select.fi{
+  width:100%;padding:14px 14px;border-radius:13px;background:#fff;
+  border:1.5px solid var(--line);color:var(--txt);font-size:14px;
+  outline:none;transition:.18s;font-weight:600;
+}
+input.fi:focus,select.fi:focus{border-color:var(--asam);box-shadow:0 0 0 4px rgba(255,107,53,.12)}
+input.fi:disabled{background:#f3f6fc;color:var(--muted);font-weight:700;cursor:not-allowed}
+select.fi{
+  appearance:none;
+  background-image:linear-gradient(45deg,transparent 50%,#6b7a9a 50%),linear-gradient(135deg,#6b7a9a 50%,transparent 50%);
+  background-position:calc(100% - 20px) 22px,calc(100% - 15px) 22px;
+  background-size:5px 5px,5px 5px;background-repeat:no-repeat;
+  padding-right:38px;
+}
+select.fi option{background:#fff;color:#1a2340}
+.alert{padding:12px 14px;border-radius:12px;font-size:12.5px;margin-top:12px;display:none;line-height:1.55;white-space:pre-line;font-weight:600}
+.alert.show{display:block}
+.alert.err{background:#fee2e2;border:1px solid #fca5a5;color:#991b1b}
+.alert.suc{background:#d1fae5;border:1px solid #6ee7b7;color:#065f46}
+
+/* STAT */
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;margin-bottom:14px}
+.stat{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  padding:14px;position:relative;overflow:hidden;box-shadow:var(--shadow);
+}
+.stat .v{font-size:21px;font-weight:800;line-height:1.1;color:#1a2340}
+.stat .v small{font-size:12px;color:var(--muted);font-weight:700;margin-left:2px}
+.stat .k{font-size:10px;color:var(--muted);font-weight:800;letter-spacing:.5px;margin-top:4px;line-height:1.3}
+.stat .ic{position:absolute;right:11px;top:10px;font-size:19px;opacity:.35}
+
+/* MENU TILES */
+.menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
+.menu-tile{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  padding:16px 13px;text-align:left;color:var(--txt);transition:.18s;
+  position:relative;overflow:hidden;box-shadow:var(--shadow);
+}
+.menu-tile:active{transform:scale(.96)}
+.menu-tile .e{font-size:26px;display:block;margin-bottom:8px}
+.menu-tile .t{font-size:13px;font-weight:800;color:#1a2340;line-height:1.3}
+.menu-tile .s{font-size:10.5px;color:var(--muted);margin-top:3px;line-height:1.4}
+.menu-tile.a{background:linear-gradient(140deg,#fff0e8,#ffffff 60%);border-color:rgba(255,107,53,.28)}
+.menu-tile.b{background:linear-gradient(140deg,#eaf0ff,#ffffff 60%);border-color:rgba(79,124,255,.28)}
+.menu-tile.c{background:linear-gradient(140deg,#e6f9f3,#ffffff 60%);border-color:rgba(16,185,129,.28)}
+.menu-tile.d{background:linear-gradient(140deg,#fff6e0,#ffffff 60%);border-color:rgba(245,158,11,.28)}
+
+/* XP BAR */
+.xpbar{height:10px;border-radius:99px;background:rgba(120,140,200,.15);overflow:hidden;box-shadow:inset 0 1px 3px rgba(80,100,180,.08)}
+.xpbar>i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--asam),var(--asam2));transition:width .5s ease;box-shadow:0 0 10px rgba(255,107,53,.4)}
+
+/* BADGE */
+.badge{
+  display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;
+  background:linear-gradient(135deg,#fff5e0,#ffe8cc);
+  border:1px solid rgba(245,158,11,.4);color:#92400e;
+  padding:6px 10px;border-radius:99px;margin:3px 4px 0 0;line-height:1.4;
+}
+.badge.locked{filter:grayscale(1);opacity:.4}
+
+/* MATERI ACCORDION */
+.acc{border:1px solid var(--line);border-radius:16px;background:var(--card);margin-bottom:10px;overflow:hidden;box-shadow:var(--shadow)}
+.acc>.hd{
+  display:flex;align-items:center;gap:11px;padding:16px;font-weight:800;font-size:13.5px;
+  background:transparent;color:var(--txt);width:100%;text-align:left;line-height:1.35;
+}
+.acc>.hd .n{
+  width:28px;height:28px;border-radius:9px;display:grid;place-items:center;font-size:12px;
+  background:linear-gradient(135deg,var(--asam),var(--asam2));color:#fff;flex:none;
+  box-shadow:0 4px 10px -4px rgba(255,107,53,.5);
+}
+.acc>.hd .arw{margin-left:auto;transition:.25s;color:var(--muted);font-size:12px;flex:none}
+.acc.open>.hd .arw{transform:rotate(90deg)}
+.acc>.bd{max-height:0;overflow:hidden;transition:max-height .35s ease;padding:0 16px}
+.acc.open>.bd{max-height:2800px;padding:0 16px 16px}
+
+/* BOXES */
+.box{border-radius:13px;padding:12px 14px;margin:10px 0;font-size:12.5px;line-height:1.7;color:#2c3a5c}
+.box.a{background:#fff2ec;border-left:4px solid var(--asam)}
+.box.b{background:#ecf1ff;border-left:4px solid var(--basa)}
+.box.n{background:#f3f6fc;border-left:4px solid #94a3b8}
+.box.w{background:#fff8e8;border-left:4px solid var(--warn)}
+.box.g{background:#e8f9f2;border-left:4px solid var(--ok)}
+.eq{
+  font-family:'Cambria Math',Georgia,serif;font-size:14px;text-align:center;
+  background:#f8faff;border-radius:11px;padding:12px;margin:10px 0;color:#1e2a4a;
+  border:1.5px dashed rgba(120,140,200,.3);letter-spacing:.3px;line-height:1.7;
+  overflow-x:auto;white-space:nowrap;
+}
+ul.tick{list-style:none;padding:0;margin:8px 0}
+ul.tick li{
+  font-size:12.5px;line-height:1.7;padding-left:24px;position:relative;
+  margin-bottom:7px;color:#3a4a6c;
+}
+ul.tick li:before{content:'▸';position:absolute;left:7px;color:var(--asam2);font-weight:800;font-size:14px}
+ul.tick li.no:before{content:'✕';color:var(--bad);font-size:11px;left:8px}
+
+/* QUIZ */
+.q-head{display:flex;align-items:center;gap:9px;margin-bottom:12px}
+.q-head .prog{flex:1;height:8px;border-radius:99px;background:rgba(120,140,200,.18);overflow:hidden}
+.q-head .prog>i{display:block;height:100%;background:linear-gradient(90deg,var(--basa),var(--basa2));transition:width .35s;box-shadow:0 0 8px rgba(79,124,255,.4)}
+.q-text{font-size:15px;font-weight:700;line-height:1.6;margin:6px 0 16px;color:#1a2340}
+.opt{
+  display:flex;align-items:center;gap:12px;width:100%;text-align:left;
+  padding:14px;border-radius:14px;background:#fff;border:1.5px solid var(--line);
+  color:var(--txt);font-size:13.5px;margin-bottom:10px;transition:.16s;
+  line-height:1.5;box-shadow:var(--shadow);
+}
+.opt:active{transform:scale(.985)}
+.opt .ltr{
+  width:28px;height:28px;flex:none;border-radius:9px;display:grid;place-items:center;
+  background:rgba(120,140,200,.13);font-weight:800;font-size:12.5px;color:#3a4a6c;
+}
+.opt.correct{background:#e8f9f2;border-color:var(--ok)}
+.opt.correct .ltr{background:var(--ok);color:#fff}
+.opt.wrong{background:#fee9eb;border-color:var(--bad)}
+.opt.wrong .ltr{background:var(--bad);color:#fff}
+.opt.dim{opacity:.5}
+
+.fb{border-radius:14px;padding:14px;margin-top:12px;font-size:12.5px;line-height:1.7;animation:fadeUp .25s}
+.fb.good{background:#e8f9f2;border:1.5px solid rgba(16,185,129,.4);color:#065f46}
+.fb.bad{background:#fee9eb;border:1.5px solid rgba(239,68,68,.4);color:#991b1b}
+.fb .ttl{font-weight:800;font-size:13px;margin-bottom:7px;display:flex;align-items:center;gap:7px}
+.fb .hint{
+  margin-top:10px;font-size:11.5px;color:#92400e;
+  background:#fff6e0;padding:10px 12px;border-radius:10px;
+  border-left:3px solid var(--warn);line-height:1.6;
+}
+
+/* QUIZ CARDS */
+.lv-card{
+  display:flex;align-items:center;gap:13px;padding:15px;border-radius:16px;
+  background:var(--card);border:1px solid var(--line);margin-bottom:11px;
+  width:100%;text-align:left;color:var(--txt);transition:.17s;box-shadow:var(--shadow);
+}
+.lv-card:active{transform:scale(.98)}
+.lv-card .num{
+  width:44px;height:44px;flex:none;border-radius:14px;display:grid;place-items:center;
+  font-weight:900;font-size:17px;color:#fff;box-shadow:var(--shadow);
+}
+.lv-card .info{flex:1;min-width:0}
+.lv-card .info .t{font-weight:800;font-size:14px;color:#1a2340;line-height:1.3}
+.lv-card .info .s{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4}
+.lv-card .sc{font-size:11.5px;font-weight:800;color:var(--warn);text-align:right;white-space:nowrap}
+
+/* GAME LEVELS */
+.lvl-node{
+  display:flex;align-items:center;gap:13px;padding:14px;border-radius:17px;
+  background:var(--card);border:1px solid var(--line);margin-bottom:11px;
+  width:100%;text-align:left;color:var(--txt);transition:.18s;position:relative;
+  overflow:hidden;box-shadow:var(--shadow);
+}
+.lvl-node:active{transform:scale(.98)}
+.lvl-node.locked{opacity:.55}
+.lvl-node .orb{
+  width:48px;height:48px;flex:none;border-radius:15px;display:grid;place-items:center;
+  font-size:22px;background:linear-gradient(135deg,#f3f6fc,#e8eefc);
+  border:1px solid var(--line);
+}
+.lvl-node.done .orb{background:linear-gradient(135deg,var(--ok),#0d9f78);border:none;color:#fff}
+.lvl-node.boss{border-color:rgba(239,68,68,.4);background:linear-gradient(120deg,#fff1f2,#fce7f3)}
+.lvl-node .meta{flex:1;min-width:0}
+.lvl-node .meta .t{font-weight:800;font-size:13.5px;color:#1a2340;line-height:1.35}
+.lvl-node .meta .s{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4}
+.stars{font-size:13px;letter-spacing:1.5px;white-space:nowrap}
+.hearts{display:flex;gap:4px;font-size:16px}
+.heart.dead{filter:grayscale(1);opacity:.3}
+.lvl-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.lvl-head .lvl-title{font-weight:900;font-size:14.5px;flex:1;line-height:1.35;color:#1a2340}
+
+/* LEVEL 1 */
+.chips{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin:16px 0}
+.chip-item{
+  padding:12px 16px;border-radius:14px;font-weight:800;font-size:14px;
+  background:#fff;border:1.5px solid var(--line);color:#1a2340;
+  transition:.16s;font-family:'Cambria Math',Georgia,serif;box-shadow:var(--shadow);
+}
+.chip-item.sel{background:linear-gradient(135deg,var(--asam),var(--asam2));border-color:transparent;color:#fff;transform:translateY(-3px) scale(1.05);box-shadow:0 10px 22px -8px rgba(255,107,53,.6)}
+.chip-item.shake{animation:shk .35s}
+@keyframes shk{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+.baskets{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:12px}
+.basket{border-radius:16px;padding:14px 12px;min-height:135px;border:2.5px dashed;transition:.2s;text-align:center}
+.basket.a{border-color:rgba(255,107,53,.5);background:#fff6f0}
+.basket.b{border-color:rgba(79,124,255,.5);background:#f0f4ff}
+.basket.hot{transform:scale(1.04);border-style:solid}
+.basket .bt{font-size:11px;font-weight:900;letter-spacing:.6px;margin-bottom:9px;line-height:1.5;color:#1a2340}
+.basket .items{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.basket .items span{
+  font-size:11px;font-weight:800;padding:5px 9px;border-radius:9px;
+  background:#fff;color:#1a2340;font-family:'Cambria Math',Georgia,serif;
+  box-shadow:0 2px 6px -2px rgba(80,100,180,.2);
+}
+
+/* LEVEL 2 */
+.rxn{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;
+  background:#f8faff;border-radius:15px;padding:18px 12px;margin:14px 0;
+  border:1.5px dashed rgba(120,140,200,.3);
+}
+.spec{
+  padding:11px 14px;border-radius:12px;font-weight:800;font-size:14.5px;
+  background:#fff;border:1.5px solid var(--line);color:#1a2340;
+  font-family:'Cambria Math',Georgia,serif;transition:.16s;box-shadow:var(--shadow);
+}
+.spec.ok{background:linear-gradient(135deg,#0d9f78,var(--ok));color:#fff;border:none}
+.spec.no{background:linear-gradient(135deg,#dc2626,var(--bad));color:#fff;border:none}
+.op-sym{font-size:16px;color:var(--muted);font-weight:800}
+
+/* LEVEL 3 */
+.mem-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
+.mem-card{
+  height:78px;border-radius:15px;display:grid;place-items:center;
+  font-size:14px;font-weight:800;font-family:'Cambria Math',Georgia,serif;
+  transition:.25s;position:relative;background:linear-gradient(135deg,#e8eefc,#dce4f8);
+  border:1.5px solid var(--line);color:transparent;box-shadow:var(--shadow);
+}
+.mem-card.open{background:linear-gradient(135deg,var(--basa),var(--basa2));color:#fff;border-color:transparent}
+.mem-card.matched{background:linear-gradient(135deg,#0d9f78,var(--ok));color:#fff;border:none;opacity:.9}
+.mem-card:before{content:'❓';position:absolute;font-size:22px;color:rgba(80,100,180,.35)}
+.mem-card.open:before,.mem-card.matched:before{display:none}
+
+/* BOSS */
+.timer{height:9px;border-radius:99px;background:rgba(120,140,200,.18);overflow:hidden;margin-bottom:14px}
+.timer>i{display:block;height:100%;background:linear-gradient(90deg,var(--ok),var(--warn),var(--bad));transition:width .95s linear}
+
+/* FEEDBACK */
+.fstrip{margin-top:14px;border-radius:14px;padding:14px;font-size:12.5px;line-height:1.7;display:none}
+.fstrip.show{display:block;animation:fadeUp .25s}
+.fstrip.good{background:#e8f9f2;border:1.5px solid rgba(16,185,129,.4);color:#065f46}
+.fstrip.bad{background:#fee9eb;border:1.5px solid rgba(239,68,68,.4);color:#991b1b}
+
+/* RANK ROW */
+.rank-row{
+  display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;
+  background:var(--card);border:1px solid var(--line);margin-bottom:9px;
+  box-shadow:var(--shadow);line-height:1.4;
+}
+.rank-row.me{border-color:var(--asam);background:linear-gradient(120deg,#fff2ec,#fff8f0)}
+.rank-row .pos{
+  width:32px;height:32px;flex:none;border-radius:10px;display:grid;place-items:center;
+  font-weight:900;font-size:12.5px;background:rgba(120,140,200,.15);color:#1a2340;
+}
+.rank-row .pos.g1{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#fff}
+.rank-row .pos.g2{background:linear-gradient(135deg,#cbd5e1,#94a3b8);color:#fff}
+.rank-row .pos.g3{background:linear-gradient(135deg,#f59e0b,#b45309);color:#fff}
+.rank-row .nm{flex:1;min-width:0}
+.rank-row .nm .n{font-size:13px;font-weight:700;color:#1a2340;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.35}
+.rank-row .nm .c{font-size:10.5px;color:var(--muted);margin-top:2px;line-height:1.4}
+.rank-row .xp{font-size:12.5px;font-weight:800;color:var(--warn);white-space:nowrap}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:12px}
+.tbl th{
+  text-align:left;padding:10px 8px;color:var(--muted);font-size:10px;font-weight:800;
+  letter-spacing:.5px;border-bottom:1.5px solid var(--line);text-transform:uppercase;
+}
+.tbl td{padding:11px 8px;border-bottom:1px solid rgba(120,140,200,.1);vertical-align:middle;line-height:1.45;color:#2c3a5c}
+.tbl tr:last-child td{border-bottom:none}
+.scroll-x{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+/* CLASS TABS (guru) */
+.class-tabs{
+  display:flex;gap:8px;margin-bottom:14px;overflow-x:auto;
+  -webkit-overflow-scrolling:touch;padding-bottom:4px;
+}
+.class-tabs button{
+  padding:10px 16px;border-radius:12px;background:#fff;border:1.5px solid var(--line);
+  font-size:12.5px;font-weight:800;color:#3a4a6c;white-space:nowrap;
+  transition:.18s;box-shadow:var(--shadow);flex:none;
+}
+.class-tabs button.active{
+  background:linear-gradient(135deg,var(--basa),var(--basa2));color:#fff;
+  border-color:transparent;box-shadow:0 8px 20px -8px rgba(79,124,255,.6);
+}
+
+/* MODAL */
+#modal-wrap{
+  position:fixed;inset:0;z-index:100;display:none;align-items:flex-end;
+  justify-content:center;background:rgba(30,40,70,.5);backdrop-filter:blur(6px);
+}
+#modal-wrap.show{display:flex;animation:fadeUp .2s}
+#modal{
+  width:100%;max-width:560px;max-height:88vh;overflow-y:auto;
+  background:#fff;border-radius:24px 24px 0 0;
+  padding:20px 18px 28px;animation:slideUp .3s cubic-bezier(.2,.9,.3,1);
+  box-shadow:0 -12px 40px -10px rgba(80,100,180,.35);
+}
+@keyframes slideUp{from{transform:translateY(60px);opacity:.4}to{transform:none;opacity:1}}
+#modal .m-hd{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+#modal .m-hd .t{font-size:16px;font-weight:900;flex:1;color:#1a2340;line-height:1.3}
+
+/* NAV */
+#nav{
+  position:fixed;left:0;right:0;bottom:0;z-index:80;display:none;
+  justify-content:space-around;padding:8px 6px calc(8px + env(safe-area-inset-bottom));
+  background:rgba(255,255,255,.94);backdrop-filter:blur(18px);
+  border-top:1px solid var(--line);box-shadow:0 -6px 24px -10px rgba(80,100,180,.2);
+}
+#nav.show{display:flex}
+#nav button{
+  background:none;color:var(--muted);font-size:9.5px;font-weight:800;
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  padding:6px 9px;border-radius:12px;transition:.18s;min-width:56px;line-height:1.2;
+}
+#nav button .e{font-size:19px;line-height:1}
+#nav button.active{color:var(--asam);background:rgba(255,107,53,.1)}
+
+/* TOAST */
+#toast{
+  position:fixed;left:50%;bottom:100px;transform:translate(-50%,26px);z-index:120;
+  background:#1a2340;color:#fff;padding:13px 18px;border-radius:14px;
+  font-size:12.5px;font-weight:700;opacity:0;pointer-events:none;transition:.3s;
+  max-width:88vw;text-align:center;box-shadow:0 12px 34px -12px rgba(0,0,0,.4);
+  line-height:1.4;
+}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+.divider{height:1.5px;background:var(--line);margin:16px 0}
+.pill{display:inline-block;font-size:10px;font-weight:800;padding:4px 9px;border-radius:99px;background:rgba(120,140,200,.14);color:#3a4a6c;line-height:1.4}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+
+<canvas id="glbg"></canvas>
+<canvas id="fx"></canvas>
+
+<header id="topbar">
+  <div class="brand"><span class="flask">⚗️</span><span>AsamBasa Lab<small>KIMIA KELAS 11</small></span></div>
+  <div class="spacer"></div>
+  <div class="chip" id="user-chip">—</div>
+  <button class="icon-btn" id="btn-mute" title="Suara">🔊</button>
+  <button class="icon-btn" id="btn-logout" title="Keluar">🚪</button>
+</header>
+
+<div id="app">
+
+  <!-- ================= LOGIN ================= -->
+  <section id="scr-login" class="screen active">
+    <div class="login-hero">
+      <div class="logo">⚗️</div>
+      <h1>AsamBasa Lab</h1>
+      <p class="muted small">Belajar Teori Asam-Basa Arrhenius, Brønsted-Lowry &amp; Lewis</p>
+    </div>
+
+    <div class="card">
+      <div class="tabs">
+        <button id="tab-siswa" class="active">👩‍🎓 Siswa</button>
+        <button id="tab-guru">👨‍🏫 Guru</button>
+      </div>
+
+      <!-- FORM SISWA -->
+      <div id="form-siswa">
+        <label class="fl">Kelas</label>
+        <select id="in-kelas" class="fi">
+          <option value="">— Pilih Kelas —</option>
+          <option value="11 Kimia 1">11 Kimia 1</option>
+          <option value="11 Kimia 2">11 Kimia 2</option>
+          <option value="11 Kimia 3">11 Kimia 3</option>
+        </select>
+        <label class="fl">Nama Siswa</label>
+        <select id="in-nama" class="fi" disabled>
+          <option value="">— Pilih kelas dulu —</option>
+        </select>
+        <label class="fl">Nomor Absen</label>
+        <input id="in-absen" class="fi" type="text" placeholder="Terisi otomatis" disabled>
+        <div class="alert err" id="al-login"></div>
+        <button class="btn primary" id="btn-login" style="margin-top:16px">🚀 Masuk Lab</button>
+      </div>
+
+      <!-- FORM GURU -->
+      <div id="form-guru" class="hidden">
+        <label class="fl">Nama Guru</label>
+        <select id="in-gu-nama" class="fi">
+          <option value="">— Pilih Guru —</option>
+          <option value="Ridwan">Ridwan</option>
+          <option value="Suliono">Suliono</option>
+        </select>
+        <label class="fl">Kode Guru</label>
+        <input id="in-gu-kode" class="fi" type="text" placeholder="Terisi otomatis" disabled>
+        <div class="alert err" id="al-guru"></div>
+        <button class="btn blue" id="btn-login-guru" style="margin-top:16px">🔐 Masuk sebagai Guru</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= HOME ================= -->
+  <section id="scr-home" class="screen">
+    <div class="card" id="home-greet"></div>
+    <div id="home-body"></div>
+  </section>
+
+  <!-- ================= TUJUAN ================= -->
+  <section id="scr-tujuan" class="screen">
+    <div class="card">
+      <h2>🎯 Tujuan Pembelajaran</h2>
+      <p>Setelah mengikuti pembelajaran ini, murid mampu:</p>
+      <ul class="tick">
+        <li>Menjelaskan teori asam basa menurut <b>Arrhenius</b>, <b>Brønsted-Lowry</b>, dan <b>Lewis</b>.</li>
+        <li>Mengidentifikasi asam dan basa pada suatu reaksi berdasarkan ketiga teori tersebut.</li>
+        <li>Menentukan pasangan asam-basa konjugasi.</li>
+        <li>Mengenali zat amfoter.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= MATERI ================= -->
+  <section id="scr-materi" class="screen">
+    <div class="card">
+      <h2>📚 Materi Teori Asam-Basa</h2>
+      <p class="small muted">Ketuk setiap bagian untuk membuka penjelasan.</p>
+    </div>
+    <div id="materi-acc"></div>
+  </section>
+
+  <!-- ================= KUIS ================= -->
+  <section id="scr-quiz" class="screen">
+    <div id="quiz-body"></div>
+  </section>
+
+  <!-- ================= GAME ================= -->
+  <section id="scr-game" class="screen">
+    <div id="game-body"></div>
+  </section>
+
+  <!-- ================= RANK ================= -->
+  <section id="scr-rank" class="screen">
+    <div id="rank-body"></div>
+  </section>
+
+  <!-- ================= TEACHER ================= -->
+  <section id="scr-teacher" class="screen">
+    <div id="teacher-body"></div>
+  </section>
+
+</div>
+
+<nav id="nav"></nav>
+
+<div id="modal-wrap"><div id="modal"></div></div>
+<div id="toast"></div>
+
+<script>
+/* =====================================================================
+   BAGIAN 1 — ROSTER SISWA + DAFTAR GURU
+   ===================================================================== */
+const ROSTER = {
+  "11 Kimia 1": [
+    "Alpino Metodius","Angely Chyntia Christine","Axel Alvis Wun","Bhetesda Grace Vanea Paraya",
+    "Briyant Edgardo Sinaga","Caecilia Chrissy Amabbel Kahaya","Caroline Ivana","Chastine Clarissa",
+    "Christiani Putri Dwi Cinta","Fabio Fransco","Felisya Valentina","Florentina Zefanya Neska",
+    "Fransisca Juju Pratama","Ignatius Dali","Irren Ilaqueenna","Keisyah Meilani Shirleen",
+    "Marsela Aprilian","Mia Azalia","Oktavienny Nofe","Owen Geraldo Chandra","Puteri Samara Jessica",
+    "Rafa Emeraldy Chandra","Selviana Nefi","Silvester Noviani","Stevino Nata Wardani","Teguh Gunawan",
+    "Tri City Yoti","Yeci","Yonas Galih Gumintang","Yusta Calista Adila Putri","Ziphora Natasha"
+  ],
+  "11 Kimia 2": [
+    "Brandon Alexander","Carissa Leticia Ngantung","Carissa Putri Siallagan","Carolia Nava","Chil Win",
+    "Christian Denilson","Clara Evani","Dave Andrean","Delius Marko Renaldi","Digta Valenda",
+    "Dion Novic","Evander Jo","Everli Listya","Fetrus Ricardo","Flaviana Salsa","Fransiska Elia",
+    "Jeppry Gerson","John Sons","Lionel Deogracia Assa","Majesty Paulyfia","Mario Christ Mikael",
+    "Maura Febbry","Ryan Misora","Stanney Canon Brahmayhanna","Theresia Hani","Valeryo Chandra Halim",
+    "Victor Setiawan","Vincent Lindra Then","Viola Mareta","Wilsenz Fernandez"
+  ],
+  "11 Kimia 3": [
+    "Albert Carnegi Hero Aquino","Andrea Charita Divina","Andreas Andika","Anggea Letiza Nacita",
+    "Cristian Willy","Evelyn Yovela","Genoveva Lusiana Anggun","Graciela Yuri Fumiko",
+    "Grasela Aprilia Iryan","Gregorius Stevanus","Grezencia Tifani","Intan Berliana",
+    "Jesica Rheaivana Fielo Veril","Josef Tristan Willie","Maria Maydilova Pasaribu","Maria Oktaviani",
+    "Midea Untan","Natasya Audreylia","Octavian Seviero Geobagara","Olinsha Shasya","Owen Cristiono",
+    "Rafael Oscar Gozali","Revi Orville Thamrin","Roderick Dustin","Rosalia Milda","Salomon Elang Nusantara",
+    "Shakira Alexa Carlos","Steven Theodoric Lorand","Vanelia Natalia Cega","Vanessa Lovelyn"
+  ]
+};
+
+const TEACHERS = [
+  { name:"Ridwan",  code:"AR" },
+  { name:"Suliono", code:"SL" }
+];
+
+const CLASSES = ["11 Kimia 1","11 Kimia 2","11 Kimia 3"];
+
+/* =====================================================================
+   BAGIAN 2 — BANK SOAL KUIS
+   ===================================================================== */
+const QUIZ_BANK = {
+  1: { name:"Mudah", icon:"🌱", color:"linear-gradient(135deg,#10b981,#22d3ee)", desc:"Konsep dasar ketiga teori",
+    qs:[
+      { tag:"Arrhenius", t:"Menurut teori Arrhenius, asam adalah zat yang dalam air melepaskan ion …",
+        o:["OH⁻","H⁺","Na⁺","Cl⁻"], a:1,
+        e:"Arrhenius (1884) menyatakan pembawa sifat asam adalah ion H⁺. Asam melepaskan ion H⁺ ketika dilarutkan dalam air.",
+        h:"Ingat: asam → H⁺, basa → OH⁻." },
+      { tag:"Arrhenius", t:"Senyawa berikut yang tergolong basa menurut teori Arrhenius adalah …",
+        o:["HCl","H₂SO₄","NaOH","CH₃COOH"], a:2,
+        e:"NaOH dalam air terionisasi: NaOH → Na⁺ + OH⁻. Karena melepaskan ion OH⁻, NaOH tergolong basa Arrhenius.",
+        h:"Cari senyawa yang mengandung gugus OH dan melepaskan OH⁻ dalam air." },
+      { tag:"Konjugasi", t:"Pada reaksi HCl + H₂O → H₃O⁺ + Cl⁻, manakah yang merupakan basa konjugasi?",
+        o:["HCl","H₂O","H₃O⁺","Cl⁻"], a:3,
+        e:"HCl bertindak sebagai asam karena mendonorkan proton (H⁺) kepada H₂O. Sisa dari HCl setelah melepas H⁺ adalah Cl⁻, sehingga Cl⁻ disebut basa konjugasi dari HCl.",
+        h:"Basa konjugasi = sisa asam setelah melepaskan satu proton (H⁺)." },
+      { tag:"Lewis", t:"Menurut teori Lewis, BF₃ tergolong …",
+        o:["asam, karena akseptor pasangan elektron","basa, karena donor pasangan elektron","asam, karena donor proton","basa, karena akseptor proton"], a:0,
+        e:"BF₃ memiliki orbital kosong sehingga mampu menerima pasangan elektron bebas dari NH₃. Akseptor pasangan elektron = asam Lewis.",
+        h:"Lewis: asam = akseptor (penerima) pasangan elektron." }
+    ]},
+  2: { name:"Sedang", icon:"⚡", color:"linear-gradient(135deg,#4f7cff,#a855f7)", desc:"Bronsted-Lowry & konjugasi",
+    qs:[
+      { tag:"Bronsted-Lowry", t:"Menurut teori Brønsted-Lowry, asam adalah spesi yang …",
+        o:["menerima proton (H⁺)","mendonorkan proton (H⁺)","melepaskan ion OH⁻","menerima pasangan elektron"], a:1,
+        e:"Brønsted-Lowry (1923): asam = donor proton (H⁺), sedangkan basa = akseptor proton (H⁺). Teori ini tidak terbatas pada pelarut air.",
+        h:"Bronsted-Lowry berbicara tentang transfer proton (H⁺)." },
+      { tag:"Konjugasi", t:"Pada reaksi NH₃ + H₂O ⇌ NH₄⁺ + OH⁻, pasangan asam-basa konjugasi yang tepat adalah …",
+        o:["NH₃ dan OH⁻","H₂O dan NH₄⁺","NH₄⁺ dan NH₃","NH₃ dan H₂O"], a:2,
+        e:"NH₃ menerima proton H⁺ dari H₂O sehingga berubah menjadi NH₄⁺. Pasangan NH₄⁺ (asam konjugasi) dengan NH₃ (basa) merupakan pasangan asam-basa konjugasi.",
+        h:"Pasangan konjugasi hanya berbeda satu proton (H⁺)." },
+      { tag:"Amfoter", t:"Spesi berikut yang bersifat amfoter (dapat berperan sebagai asam maupun basa) adalah …",
+        o:["HCl","NaOH","H₂O","NH₃"], a:2,
+        e:"Air bersifat amfoter/amfiprotik: ia dapat mendonorkan H⁺ (bersifat asam) dan dapat menerima H⁺ (bersifat basa).",
+        h:"Zat amfoter bisa melepas sekaligus menerima proton." },
+      { tag:"Bronsted-Lowry", t:"Pada reaksi HClO₄ + HCO₃⁻ → ClO₄⁻ + H₂CO₃, spesi yang berperan sebagai basa adalah …",
+        o:["HClO₄","HCO₃⁻","ClO₄⁻","H₂CO₃"], a:1,
+        e:"HCO₃⁻ menerima proton H⁺ dari HClO₄ dan berubah menjadi H₂CO₃. Karena menerima proton, HCO₃⁻ berperan sebagai basa.",
+        h:"Yang menerima H⁺ = basa." }
+    ]},
+  3: { name:"Sulit", icon:"🔥", color:"linear-gradient(135deg,#ff6b35,#f59e0b)", desc:"Analisis kelebihan & kelemahan teori",
+    qs:[
+      { tag:"Arrhenius", t:"Kelemahan teori asam-basa Arrhenius adalah …",
+        o:["tidak dapat menjelaskan reaksi netralisasi","hanya berlaku jika zat dilarutkan dalam air dan tidak dapat menjelaskan basa seperti NH₃","tidak dapat menjelaskan asam kuat dan asam lemah","hanya berlaku untuk senyawa kovalen"], a:1,
+        e:"Arrhenius hanya membahas zat yang dilarutkan dalam air. Teori ini tidak dapat menjelaskan NH₃ atau Na₂CO₃ yang tidak mengandung ion OH⁻ tetapi menghasilkan ion OH⁻ dalam air.",
+        h:"Pikirkan zat seperti NH₃ yang bersifat basa tetapi tidak punya gugus OH." },
+      { tag:"Bronsted-Lowry", t:"Reaksi NH₃(g) + HCl(g) → NH₄Cl(s) dapat dijelaskan sebagai reaksi asam-basa oleh teori …",
+        o:["Arrhenius","Brønsted-Lowry","Dalton","Lavoisier"], a:1,
+        e:"Reaksi ini berlangsung tanpa air, sehingga tidak dapat dijelaskan teori Arrhenius. Brønsted-Lowry menjelaskannya: HCl mendonorkan proton (asam) dan NH₃ menerima proton (basa).",
+        h:"Teori mana yang tidak memerlukan air sebagai pelarut?" },
+      { tag:"Lewis", t:"Pada molekul HNO₃, menurut teori Lewis atom yang berperan sebagai asam (akseptor pasangan elektron) adalah …",
+        o:["atom H","atom N","atom O","tidak ada"], a:2,
+        e:"Menurut Lewis, atom O pada HNO₃ dapat menerima pasangan elektron, sedangkan atom N memiliki pasangan elektron bebas dan berperan sebagai basa.",
+        h:"Asam Lewis = atom yang punya orbital kosong / bisa menerima PEB." },
+      { tag:"Bronsted-Lowry", t:"Kekuatan asam menurut Brønsted-Lowry berbanding … dengan kekuatan basa konjugasinya.",
+        o:["lurus","terbalik","tidak berhubungan","sama"], a:1,
+        e:"Semakin kuat suatu asam, semakin lemah basa konjugasinya; sebaliknya semakin kuat suatu basa, semakin lemah asam konjugasinya. Jadi hubungannya berbanding terbalik.",
+        h:"Asam kuat → basa konjugasinya lemah." }
+    ]},
+  4: { name:"Tantangan", icon:"👑", color:"linear-gradient(135deg,#a855f7,#ef4444)", desc:"Soal HOTS & analisis",
+    qs:[
+      { tag:"Bronsted-Lowry", t:"Dalam reaksi HSO₄⁻ + H₂O ⇌ SO₄²⁻ + H₃O⁺, spesi HSO₄⁻ berperan sebagai …",
+        o:["basa Brønsted-Lowry","asam Brønsted-Lowry","basa Lewis","asam Arrhenius"], a:1,
+        e:"HSO₄⁻ memberikan satu proton (H⁺) kepada H₂O sehingga terbentuk SO₄²⁻ dan H₃O⁺. Karena mendonorkan proton, HSO₄⁻ berperan sebagai asam Brønsted-Lowry.",
+        h:"Lihat siapa yang kehilangan H⁺." },
+      { tag:"Lewis", t:"Keterbatasan teori asam-basa Lewis adalah …",
+        o:["tidak dapat menjelaskan reaksi tanpa transfer proton","hanya dapat menjelaskan zat/ion yang mencapai kaidah oktet dan umumnya senyawa kovalen","tidak dapat menjelaskan oksida asam dan oksida basa","tidak dapat menjelaskan senyawa organik"], a:1,
+        e:"Kelemahan Lewis: (1) hanya dapat menjelaskan sifat asam-basa zat atau ion yang mencapai kaidah oktet, dan (2) hanya dapat menjelaskan senyawa kovalen.",
+        h:"Ingat dua poin kelemahan Lewis pada materi." },
+      { tag:"Bronsted-Lowry", t:"Dua asam berbeda, HA₁ dan HA₂, masing-masing direaksikan terpisah dengan basa B yang sama. Pada HA₁ basa B bersifat lemah, sedangkan pada HA₂ basa B bersifat kuat. Kesimpulannya …",
+        o:["HA₁ lebih kuat daripada HA₂","HA₂ lebih kuat daripada HA₁","HA₁ dan HA₂ sama kuat","tidak dapat dibandingkan"], a:1,
+        e:"Kekuatan asam-basa bersifat relatif. Basa yang sama akan tampak kuat ketika berhadapan dengan asam yang lebih kuat. Karena basa B bersifat kuat terhadap HA₂, maka HA₂ lebih kuat daripada HA₁.",
+        h:"Basa yang sama bisa tampak kuat atau lemah tergantung pasangan asamnya." },
+      { tag:"Amfoter", t:"Spesi berikut yang TIDAK bersifat amfoter adalah …",
+        o:["H₂O","HCO₃⁻","HSO₄⁻","CO₃²⁻"], a:3,
+        e:"CO₃²⁻ hanya dapat menerima proton (bersifat basa) dan tidak dapat mendonorkan proton, sehingga bukan zat amfoter.",
+        h:"Zat amfoter harus bisa melepas H⁺ juga, bukan hanya menerima." }
+    ]}
+};
+
+/* =====================================================================
+   BAGIAN 3 — BANK SOAL BOSS
+   ===================================================================== */
+const BOSS_QS = [
+  { t:"Menurut Lavoisier, zat yang menyebabkan sifat asam adalah …",
+    o:["oksigen","hidrogen","nitrogen","karbon"], a:0,
+    e:"Lavoisier berpendapat bahwa oksigen adalah penyebab sifat asam. Pendapat ini kemudian disempurnakan oleh Davy (hidrogen) dan akhirnya oleh Arrhenius (ion H⁺).",
+    h:"Ini fakta sejarah, bukan teori modern." },
+  { t:"H₂SO₄ → 2H⁺ + SO₄²⁻. Berdasarkan jumlah ion H⁺ yang dilepaskan, H₂SO₄ termasuk asam …",
+    o:["monovalen","divalen","trivalen","tetravalen"], a:1,
+    e:"H₂SO₄ melepaskan 2 ion H⁺ sehingga termasuk asam divalen (polivalen dengan dua valensi asam).",
+    h:"Hitung jumlah ion H⁺ yang dilepas." },
+  { t:"Basa konjugasi dari NH₄⁺ adalah …",
+    o:["NH₃","NH₂⁻","H₃O⁺","OH⁻"], a:0,
+    e:"NH₄⁺ → H⁺ + NH₃. Sisa setelah melepas H⁺ adalah NH₃, jadi NH₃ adalah basa konjugasi dari NH₄⁺.",
+    h:"Basa konjugasi = sisa asam setelah kehilangan satu H⁺." },
+  { t:"Pada reaksi HCl + H₂O → H₃O⁺ + Cl⁻, H₂O berperan sebagai …",
+    o:["asam, karena menerima proton","basa, karena menerima proton","asam, karena melepas proton","basa, karena melepas proton"], a:1,
+    e:"H₂O menerima proton (H⁺) dari HCl dan berubah menjadi H₃O⁺. Karena menerima proton, H₂O berperan sebagai basa Brønsted-Lowry.",
+    h:"Akseptor proton = basa." },
+  { t:"Menurut teori Lewis, basa adalah spesi yang …",
+    o:["menerima pasangan elektron","mendonorkan pasangan elektron","mendonorkan proton","menerima proton"], a:1,
+    e:"Teori Lewis: basa = donor (pemberi) pasangan elektron bebas, asam = akseptor (penerima) pasangan elektron.",
+    h:"Lewis fokus pada pasangan elektron, bukan proton." },
+  { t:"Pada reaksi AlCl₃ + Cl⁻ → AlCl₄⁻, AlCl₃ berperan sebagai …",
+    o:["asam Lewis","basa Lewis","asam Arrhenius","basa Brønsted-Lowry"], a:0,
+    e:"AlCl₃ menerima pasangan elektron bebas dari ion Cl⁻ untuk membentuk ikatan kovalen koordinasi. Karena menerima pasangan elektron, AlCl₃ adalah asam Lewis.",
+    h:"Siapa yang menerima pasangan elektron?" },
+  { t:"Zat berikut yang bersifat amfoter adalah …",
+    o:["HSO₄⁻","SO₄²⁻","HCl","NaOH"], a:0,
+    e:"HSO₄⁻ dapat melepaskan H⁺ menjadi SO₄²⁻ (bersifat asam) dan dapat menerima H⁺ menjadi H₂SO₄ (bersifat basa). Jadi HSO₄⁻ bersifat amfoter.",
+    h:"Zat amfoter bisa dua peran: donor dan akseptor proton." },
+  { t:"Kekuatan asam dan basa menurut teori Arrhenius didasarkan atas …",
+    o:["besarnya [H⁺] dan [OH⁻]","banyaknya atom oksigen","jenis pelarut yang dipakai","warna larutan"], a:0,
+    e:"Menurut Arrhenius, asam kuat memiliki [H⁺] besar dan asam lemah memiliki [H⁺] kecil; basa kuat memiliki [OH⁻] besar dan basa lemah memiliki [OH⁻] kecil.",
+    h:"Berhubungan dengan konsentrasi ion dalam larutan." },
+  { t:"Teori yang dapat menjelaskan sifat asam-basa oksida asam dan oksida basa adalah teori …",
+    o:["Arrhenius","Brønsted-Lowry","Lewis","Lavoisier"], a:2,
+    e:"Kelebihan teori Lewis: dapat menjelaskan sifat asam-basa oksida asam dan oksida basa, senyawa dengan pasangan elektron bebas, serta senyawa organik.",
+    h:"Teori mana yang membahas pasangan elektron?" },
+  { t:"Pasangan konjugasi dari H₂PO₄⁻ ketika berperan sebagai asam adalah …",
+    o:["H₃PO₄","HPO₄²⁻","PO₄³⁻","H₃O⁺"], a:1,
+    e:"Jika H₂PO₄⁻ berperan sebagai asam, ia melepaskan satu proton: H₂PO₄⁻ → H⁺ + HPO₄²⁻. Jadi basa konjugasinya adalah HPO₄²⁻.",
+    h:"Kurangi satu H⁺ dari H₂PO₄⁻." }
+];
+
+/* =====================================================================
+   BAGIAN 4 — DATA PERMAINAN
+   ===================================================================== */
+const LEVEL1_ITEMS = [
+  {f:"HCl", t:"a"}, {f:"H₂SO₄", t:"a"}, {f:"CH₃COOH", t:"a"}, {f:"HNO₃", t:"a"},
+  {f:"NaOH", t:"b"}, {f:"KOH", t:"b"}, {f:"Ca(OH)₂", t:"b"}, {f:"Ba(OH)₂", t:"b"}
+];
+
+const LEVEL2_RX = [
+  { eq:"NH₃ + H₂O ⇌ NH₄⁺ + OH⁻", left:["NH₃","H₂O"], acid:"H₂O", base:"NH₃",
+    e:"H₂O mendonorkan H⁺ kepada NH₃ → H₂O bersifat asam, NH₃ bersifat basa." },
+  { eq:"HCl + H₂O → H₃O⁺ + Cl⁻", left:["HCl","H₂O"], acid:"HCl", base:"H₂O",
+    e:"HCl mendonorkan H⁺ → asam; H₂O menerima H⁺ → basa." },
+  { eq:"CH₃COOH + H₂O ⇌ CH₃COO⁻ + H₃O⁺", left:["CH₃COOH","H₂O"], acid:"CH₃COOH", base:"H₂O",
+    e:"CH₃COOH melepas H⁺ → asam; H₂O menerima H⁺ → basa." },
+  { eq:"HClO₄ + HCO₃⁻ → ClO₄⁻ + H₂CO₃", left:["HClO₄","HCO₃⁻"], acid:"HClO₄", base:"HCO₃⁻",
+    e:"HClO₄ melepas H⁺ → asam; HCO₃⁻ menerima H⁺ → basa." },
+  { eq:"HSO₄⁻ + H₂O ⇌ SO₄²⁻ + H₃O⁺", left:["HSO₄⁻","H₂O"], acid:"HSO₄⁻", base:"H₂O",
+    e:"HSO₄⁻ melepas H⁺ → asam; H₂O menerima H⁺ → basa." }
+];
+
+const LEVEL3_PAIRS = [
+  {a:"HCl", b:"Cl⁻", why:"HCl melepas H⁺ menjadi Cl⁻."},
+  {a:"NH₄⁺", b:"NH₃", why:"NH₄⁺ melepas H⁺ menjadi NH₃."},
+  {a:"H₃O⁺", b:"H₂O", why:"H₃O⁺ melepas H⁺ menjadi H₂O."},
+  {a:"HCO₃⁻", b:"CO₃²⁻", why:"HCO₃⁻ melepas H⁺ menjadi CO₃²⁻."},
+  {a:"H₂SO₄", b:"HSO₄⁻", why:"H₂SO₄ melepas H⁺ menjadi HSO₄⁻."},
+  {a:"H₃PO₄", b:"H₂PO₄⁻", why:"H₃PO₄ melepas H⁺ menjadi H₂PO₄⁻."},
+  {a:"CH₃COOH", b:"CH₃COO⁻", why:"CH₃COOH melepas H⁺ menjadi CH₃COO⁻."},
+  {a:"HF", b:"F⁻", why:"HF melepas H⁺ menjadi F⁻."}
+];
+
+const LEVEL4_QS = [
+  { t:"Pada reaksi BF₃ + NH₃ → F₃B–NH₃, spesi yang berperan sebagai asam Lewis adalah …",
+    o:["BF₃","NH₃","F₃B–NH₃","tidak ada"], a:0,
+    e:"BF₃ memiliki orbital kosong sehingga menerima pasangan elektron bebas dari atom N pada NH₃. Penerima pasangan elektron = asam Lewis.",
+    h:"Asam Lewis = akseptor pasangan elektron." },
+  { t:"Pada reaksi BF₃ + NH₃ → F₃B–NH₃, NH₃ berperan sebagai …",
+    o:["asam Lewis","basa Lewis","asam Brønsted-Lowry","basa Arrhenius"], a:1,
+    e:"NH₃ menyumbangkan pasangan elektron bebas dari atom N untuk membentuk ikatan kovalen koordinasi dengan BF₃. Donor pasangan elektron = basa Lewis.",
+    h:"Donor pasangan elektron = basa Lewis." },
+  { t:"Pada reaksi AlCl₃ + Cl⁻ → AlCl₄⁻, AlCl₃ berperan sebagai …",
+    o:["asam Lewis","basa Lewis","asam Arrhenius","basa Brønsted-Lowry"], a:0,
+    e:"AlCl₃ menerima pasangan elektron bebas dari Cl⁻, sehingga AlCl₃ adalah asam Lewis dan Cl⁻ adalah basa Lewis.",
+    h:"AlCl₃ punya orbital kosong." },
+  { t:"Menurut teori Lewis, basa adalah spesi yang …",
+    o:["menerima pasangan elektron","mendonorkan pasangan elektron","mendonorkan proton","menerima proton"], a:1,
+    e:"Lewis: asam = akseptor pasangan elektron, basa = donor pasangan elektron. Teori ini dapat menjelaskan reaksi yang tidak melibatkan transfer proton.",
+    h:"Lewis fokus pada pasangan elektron bebas." },
+  { t:"Pada reaksi H⁺ + H₂O → H₃O⁺, H₂O berperan sebagai …",
+    o:["asam Lewis","basa Lewis","asam konjugasi","basa konjugasi"], a:1,
+    e:"H₂O menyumbangkan pasangan elektron bebas kepada ion H⁺ untuk membentuk H₃O⁺. Karena menyumbangkan pasangan elektron, H₂O berperan sebagai basa Lewis.",
+    h:"Siapa yang menyumbang pasangan elektron?" }
+];
+
+const LEVEL5_QS = [
+  { t:"Zat amfoter adalah zat yang …",
+    o:["hanya bersifat asam","hanya bersifat basa","dapat bersifat asam maupun basa","tidak bersifat asam maupun basa"], a:2,
+    e:"Zat amfoter (amfiprotik) dapat berperan sebagai asam (donor proton) maupun basa (akseptor proton), tergantung pasangan reaksinya.",
+    h:"Amfoter = dua peran sekaligus." },
+  { t:"Pada reaksi HCO₃⁻ + H₂O ⇌ H₂CO₃ + OH⁻, HCO₃⁻ berperan sebagai …",
+    o:["asam","basa","garam","oksidator"], a:1,
+    e:"HCO₃⁻ menerima proton H⁺ dari H₂O sehingga berubah menjadi H₂CO₃. Karena menerima proton, HCO₃⁻ bersifat basa pada reaksi ini.",
+    h:"Perhatikan arah perpindahan H⁺." },
+  { t:"Pada reaksi HSO₄⁻ + H₂O ⇌ SO₄²⁻ + H₃O⁺, HSO₄⁻ berperan sebagai …",
+    o:["asam","basa","garam","tidak bereaksi"], a:0,
+    e:"HSO₄⁻ melepaskan proton H⁺ kepada H₂O sehingga terbentuk SO₄²⁻. Karena mendonorkan proton, HSO₄⁻ bersifat asam pada reaksi ini.",
+    h:"Siapa yang kehilangan H⁺?" },
+  { t:"Zat berikut yang BUKAN zat amfoter adalah …",
+    o:["H₂O","HCO₃⁻","HSO₄⁻","CO₃²⁻"], a:3,
+    e:"CO₃²⁻ hanya dapat menerima proton (basa), tidak dapat mendonorkan proton, sehingga bukan amfoter.",
+    h:"Agar amfoter, zat harus bisa melepas H⁺ juga." },
+  { t:"Mengapa air (H₂O) disebut zat amfoter? Karena air …",
+    o:["dapat menerima dan melepaskan proton (H⁺)","selalu bersifat netral","tidak dapat bereaksi dengan asam","hanya dapat menerima proton"], a:0,
+    e:"Air dapat melepaskan H⁺ (bersifat asam) dan dapat menerima H⁺ (bersifat basa). Karena itu air disebut amfoter/amfiprotik.",
+    h:"Ingat contoh H₂O + NH₃ dan H₂O + HCl." }
+];
+
+/* =====================================================================
+   BAGIAN 5 — PENYIMPANAN DATA
+   ===================================================================== */
+const DBKEY = "asambasa_db_v4";
+const SESSKEY = "asambasa_session_v4";
+
+function blankProgress(){
+  return {
+    xp: 0,
+    badges: [],
+    quiz: { 1:{best:0,attempts:0}, 2:{best:0,attempts:0}, 3:{best:0,attempts:0}, 4:{best:0,attempts:0} },
+    quizHistory: [],
+    game: { unlocked:1, levels:{} }
+  };
+}
+function defaultDB(){
+  const t = {};
+  TEACHERS.forEach(g => {
+    t[g.name] = Object.assign({
+      name: g.name, code: g.code, isTeacher: true,
+      createdAt: nowISO(), lastSeen: nowISO()
+    }, blankProgress());
+  });
+  return { students: {}, teachers: t, createdAt: nowISO() };
+}
+
+let DB = null;
+function loadDB(){
+  try{
+    const raw = localStorage.getItem(DBKEY);
+    if(raw){ DB = JSON.parse(raw); }
+    else { DB = defaultDB(); }
+  }catch(e){ DB = defaultDB(); }
+  if(!DB.students) DB.students = {};
+  if(!DB.teachers || Array.isArray(DB.teachers)) DB.teachers = defaultDB().teachers;
+  TEACHERS.forEach(g => {
+    if(!DB.teachers[g.name]){
+      DB.teachers[g.name] = Object.assign({
+        name: g.name, code: g.code, isTeacher: true,
+        createdAt: nowISO(), lastSeen: nowISO()
+      }, blankProgress());
+    } else {
+      DB.teachers[g.name].code = g.code;
+      DB.teachers[g.name].isTeacher = true;
+      ensureProgress(DB.teachers[g.name]);
+    }
+  });
+}
+function saveDB(){ try{ localStorage.setItem(DBKEY, JSON.stringify(DB)); }catch(e){ console.warn("Gagal simpan", e); } }
+function ensureProgress(u){
+  if(!u) return u;
+  if(typeof u.xp !== "number") u.xp = 0;
+  if(!Array.isArray(u.badges)) u.badges = [];
+  if(!u.quiz) u.quiz = {1:{best:0,attempts:0},2:{best:0,attempts:0},3:{best:0,attempts:0},4:{best:0,attempts:0}};
+  if(!Array.isArray(u.quizHistory)) u.quizHistory = [];
+  if(!u.game) u.game = { unlocked:1, levels:{} };
+  if(!u.game.levels) u.game.levels = {};
+  if(typeof u.game.unlocked !== "number") u.game.unlocked = 1;
+  return u;
+}
+loadDB();
+
+/* =====================================================================
+   BAGIAN 6 — UTILITAS
+   ===================================================================== */
+const $  = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+function esc(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function nowISO(){ return new Date().toISOString(); }
+function fmtDate(iso){ try{ return new Date(iso).toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"}); }catch(e){ return "-"; } }
+function fmtTime(ms){ const s = Math.round(ms/1000); return Math.floor(s/60) + "m " + String(s%60).padStart(2,"0") + "s"; }
+function studentKey(classId, absen){ return classId + "#" + absen; }
+
+let toastTimer = null;
+function toast(msg){
+  const t = $("#toast"); t.textContent = msg; t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove("show"), 2400);
+}
+function openModal(html, opts){
+  opts = opts || {};
+  $("#modal").innerHTML = html;
+  $("#modal-wrap").classList.add("show");
+  if(!opts.keepScroll) $("#modal").scrollTop = 0;
+}
+function closeModal(){ $("#modal-wrap").classList.remove("show"); }
+$("#modal-wrap").addEventListener("click", e => { if(e.target.id === "modal-wrap") closeModal(); });
+
+/* =====================================================================
+   BAGIAN 7 — WEBGL BACKGROUND (Cerah & halus)
+   ===================================================================== */
+(function initWebGL(){
+  const cv = document.getElementById("glbg");
+  const gl = cv.getContext("webgl", {antialias:true, alpha:true, premultipliedAlpha:false}) || cv.getContext("experimental-webgl", {alpha:true});
+  if(!gl){ cv.style.display="none"; return; }
+  const vsSrc = `attribute vec3 aPos; attribute vec3 aCol; uniform mat4 uMVP; uniform float uSize; varying vec3 vCol;
+    void main(){ gl_Position = uMVP * vec4(aPos, 1.0); gl_PointSize = uSize; vCol = aCol; }`;
+  const fsSrc = `precision mediump float; varying vec3 vCol; uniform float uAlpha;
+    void main(){ gl_FragColor = vec4(vCol, uAlpha); }`;
+  function mk(type, src){ const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; }
+  const vs = mk(gl.VERTEX_SHADER, vsSrc), fs = mk(gl.FRAGMENT_SHADER, fsSrc);
+  const prog = gl.createProgram();
+  gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+  gl.useProgram(prog);
+  const A_POS = gl.getAttribLocation(prog, "aPos");
+  const A_COL = gl.getAttribLocation(prog, "aCol");
+  const U_MVP = gl.getUniformLocation(prog, "uMVP");
+  const U_SIZE = gl.getUniformLocation(prog, "uSize");
+  const U_ALPHA = gl.getUniformLocation(prog, "uAlpha");
+  const V = [[1,1,1],[1,-1,-1],[-1,1,-1],[-1,-1,1]].map(v => { const l = Math.hypot(v[0],v[1],v[2]); return [v[0]/l*1.15, v[1]/l*1.15, v[2]/l*1.15]; });
+  const lineVerts = [], lineCols = [], pointVerts = [], pointCols = [];
+  const cCenter = [1.0, 0.55, 0.32], cOuter = [0.42, 0.58, 1.0];
+  V.forEach(v => { lineVerts.push(0,0,0, v[0],v[1],v[2]); lineCols.push(cCenter[0],cCenter[1],cCenter[2], cOuter[0],cOuter[1],cOuter[2]); });
+  pointVerts.push(0,0,0); pointCols.push(cCenter[0],cCenter[1],cCenter[2]);
+  V.forEach(v => { pointVerts.push(v[0],v[1],v[2]); pointCols.push(cOuter[0],cOuter[1],cOuter[2]); });
+  const lineBufPos = gl.createBuffer(), lineBufCol = gl.createBuffer(), ptBufPos = gl.createBuffer(), ptBufCol = gl.createBuffer();
+  function bindBufs(isLine){
+    gl.bindBuffer(gl.ARRAY_BUFFER, isLine ? lineBufPos : ptBufPos);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(isLine ? lineVerts : pointVerts), gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(A_POS); gl.vertexAttribPointer(A_POS, 3, gl.FLOAT, false, 0, 0);
+    gl.bindBuffer(gl.ARRAY_BUFFER, isLine ? lineBufCol : ptBufCol);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(isLine ? lineCols : pointCols), gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(A_COL); gl.vertexAttribPointer(A_COL, 3, gl.FLOAT, false, 0, 0);
+  }
+  function perspective(fovy, aspect, near, far){
+    const f = 1/Math.tan(fovy/2), nf = 1/(near-far);
+    return new Float32Array([f/aspect,0,0,0, 0,f,0,0, 0,0,(far+near)*nf,-1, 0,0,2*far*near*nf,0]);
+  }
+  function mul(a,b){ const o = new Float32Array(16);
+    for(let i=0;i<4;i++) for(let j=0;j<4;j++){ let s=0; for(let k=0;k<4;k++) s += a[k*4+j]*b[i*4+k]; o[i*4+j]=s; } return o; }
+  function rotY(t){ const c=Math.cos(t),s=Math.sin(t); return new Float32Array([c,0,-s,0, 0,1,0,0, s,0,c,0, 0,0,0,1]); }
+  function rotX(t){ const c=Math.cos(t),s=Math.sin(t); return new Float32Array([1,0,0,0, 0,c,s,0, 0,-s,c,0, 0,0,0,1]); }
+  function trans(x,y,z){ return new Float32Array([1,0,0,0, 0,1,0,0, 0,0,1,0, x,y,z,1]); }
+  function scale(s){ return new Float32Array([s,0,0,0, 0,s,0,0, 0,0,s,0, 0,0,0,1]); }
+  const molecules = [
+    { x:-1.6, y: 0.8, z:-1.6, s:0.72, spd:0.42, tilt:0.5 },
+    { x: 1.8, y:-0.7, z:-2.4, s:0.92, spd:0.3, tilt:-0.3 },
+    { x: 0.2, y: 1.5, z:-3.4, s:1.05, spd:0.22, tilt:0.9 }
+  ];
+  let W = 0, H = 0, DPR = Math.min(window.devicePixelRatio||1, 2);
+  function resize(){
+    W = window.innerWidth; H = window.innerHeight;
+    cv.width = Math.floor(W*DPR); cv.height = Math.floor(H*DPR);
+    cv.style.width = W+"px"; cv.style.height = H+"px";
+    gl.viewport(0,0,cv.width,cv.height);
+  }
+  resize(); window.addEventListener("resize", resize);
+  gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE); gl.clearColor(0,0,0,0);
+  let t0 = performance.now(), raf = null;
+  function frame(now){
+    const t = (now - t0)/1000;
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    const proj = perspective(Math.PI/3.2, W/H, 0.1, 100);
+    molecules.forEach((m,i) => {
+      const rot = mul(rotX(m.tilt + Math.sin(t*0.4+i)*0.25), rotY(t*m.spd + i*1.4));
+      let mv = mul(rot, scale(m.s));
+      mv = mul(mv, trans(m.x, m.y + Math.sin(t*0.6+i)*0.14, m.z));
+      const mvp = mul(proj, mv);
+      gl.uniformMatrix4fv(U_MVP, false, mvp);
+      bindBufs(true); gl.uniform1f(U_ALPHA, 0.25); gl.uniform1f(U_SIZE, 1);
+      gl.drawArrays(gl.LINES, 0, lineVerts.length/3);
+      bindBufs(false); gl.uniform1f(U_ALPHA, 0.55); gl.uniform1f(U_SIZE, 8*DPR);
+      gl.drawArrays(gl.POINTS, 0, pointVerts.length/3);
+    });
+    raf = requestAnimationFrame(frame);
+  }
+  raf = requestAnimationFrame(frame);
+  document.addEventListener("visibilitychange", () => {
+    if(document.hidden){ cancelAnimationFrame(raf); raf = null; }
+    else if(!raf){ t0 = performance.now() - 1000; raf = requestAnimationFrame(frame); }
+  });
+})();
+
+/* =====================================================================
+   BAGIAN 8 — EFEK SUARA
+   ===================================================================== */
+const Sfx = {
+  ctx:null, muted:false,
+  ensure(){ if(!this.ctx){ try{ this.ctx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ this.ctx=null; } }
+    if(this.ctx && this.ctx.state==="suspended"){ this.ctx.resume(); } return this.ctx; },
+  tone(freq, dur, type, vol, delay){
+    const c = this.ensure(); if(!c || this.muted) return;
+    const t = c.currentTime + (delay||0);
+    const o = c.createOscillator(), g = c.createGain();
+    o.type = type || "sine"; o.frequency.setValueAtTime(freq, t);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.linearRampToValueAtTime(vol==null?0.14:vol, t+0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001, t+dur);
+    o.connect(g); g.connect(c.destination); o.start(t); o.stop(t+dur+0.05);
+  },
+  click(){ this.tone(520,0.05,"square",0.05); },
+  correct(){ this.tone(660,0.12,"sine",0.16,0); this.tone(880,0.18,"sine",0.14,0.09); },
+  wrong(){ this.tone(200,0.14,"sawtooth",0.11,0); this.tone(150,0.22,"sawtooth",0.09,0.12); },
+  levelUp(){ [523,659,784].forEach((f,i)=>this.tone(f,0.2,"triangle",0.13,i*0.09)); },
+  win(){ [523,659,784,1046,1318].forEach((f,i)=>this.tone(f,0.28,"triangle",0.13,i*0.11)); },
+  lose(){ [420,340,260,190].forEach((f,i)=>this.tone(f,0.24,"sawtooth",0.1,i*0.11)); },
+  tick(){ this.tone(880,0.04,"square",0.05); }
+};
+
+/* =====================================================================
+   BAGIAN 9 — KONFETI
+   ===================================================================== */
+const Confetti = (function(){
+  const cv = document.getElementById("fx"); const ctx = cv.getContext("2d");
+  let parts = [], running = false;
+  const COLORS = ["#ff6b35","#ffa94d","#4f7cff","#a855f7","#10b981","#f59e0b","#ef4444"];
+  function resize(){
+    const dpr = Math.min(window.devicePixelRatio||1, 2);
+    cv.width = window.innerWidth*dpr; cv.height = window.innerHeight*dpr;
+    cv.style.width = window.innerWidth+"px"; cv.style.height = window.innerHeight+"px";
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  resize(); window.addEventListener("resize", resize);
+  function burst(n){
+    n = n || 90; const W = window.innerWidth;
+    for(let i=0;i<n;i++){
+      parts.push({ x: W/2 + (Math.random()-0.5)*W*0.7, y: -20 - Math.random()*140,
+        vx: (Math.random()-0.5)*5, vy: 2 + Math.random()*4.5,
+        w: 6 + Math.random()*7, h: 8 + Math.random()*9,
+        rot: Math.random()*Math.PI*2, vr: (Math.random()-0.5)*0.28,
+        col: COLORS[(Math.random()*COLORS.length)|0] });
+    }
+    if(!running) loop();
+  }
+  function loop(){
+    running = true;
+    ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
+    for(let i=parts.length-1;i>=0;i--){
+      const p = parts[i];
+      p.vy += 0.14; p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.vx *= 0.995;
+      if(p.y > window.innerHeight + 60){ parts.splice(i,1); continue; }
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+      ctx.fillStyle = p.col; ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h); ctx.restore();
+    }
+    if(parts.length){ requestAnimationFrame(loop); }
+    else { running = false; ctx.clearRect(0,0,window.innerWidth,window.innerHeight); }
+  }
+  return { burst };
+})();
+
+/* =====================================================================
+   BAGIAN 10 — STATE & AUTENTIKASI
+   ===================================================================== */
+const App = { role:null, key:null, teacherName:null, nav:"home", quiz:null, game:null, teacherClass:"11 Kimia 1" };
+
+function currentUser(){
+  if(!App.role) return null;
+  if(App.role === "student" && App.key) return DB.students[App.key] || null;
+  if(App.role === "teacher" && App.teacherName){
+    const t = DB.teachers[App.teacherName];
+    return t ? ensureProgress(t) : null;
+  }
+  return null;
+}
+const currentStudent = currentUser;
+
+function persistUser(){ const u = currentUser(); if(u){ u.lastSeen = nowISO(); saveDB(); } }
+
+function getOrCreateStudent(classId, absen, name){
+  const k = studentKey(classId, absen);
+  if(!DB.students[k]){
+    DB.students[k] = Object.assign({
+      classId, absen: Number(absen), name: name,
+      createdAt: nowISO(), lastSeen: nowISO()
+    }, blankProgress());
+    saveDB();
+  }
+  return ensureProgress(DB.students[k]);
+}
+
+function saveSession(){
+  try{ localStorage.setItem(SESSKEY, JSON.stringify({ role:App.role, key:App.key, teacherName:App.teacherName })); }catch(e){}
+}
+function clearSession(){ try{ localStorage.removeItem(SESSKEY); }catch(e){} }
+function restoreSession(){
+  try{
+    const raw = localStorage.getItem(SESSKEY);
+    if(!raw) return false;
+    const s = JSON.parse(raw);
+    if(s.role === "student" && s.key && DB.students[s.key]){ App.role="student"; App.key=s.key; App.teacherName=null; return true; }
+    if(s.role === "teacher" && s.teacherName && DB.teachers[s.teacherName]){ App.role="teacher"; App.teacherName=s.teacherName; App.key=null; return true; }
+  }catch(e){}
+  return false;
+}
+
+/* =====================================================================
+   BAGIAN 11 — NAVIGASI & TOPBAR
+   ===================================================================== */
+function showScreen(id){
+  $$(".screen").forEach(s => s.classList.remove("active"));
+  const el = document.getElementById("scr-" + id);
+  if(el) el.classList.add("active");
+  window.scrollTo({top:0, behavior:"instant"});
+}
+function updateNav(){
+  const nav = $("#nav");
+  if(!App.role){ nav.classList.remove("show"); $("#topbar").classList.remove("show"); return; }
+  $("#topbar").classList.add("show");
+  const chip = $("#user-chip");
+  const u = currentUser();
+  if(App.role === "student") chip.textContent = u ? (u.name.split(" ")[0] + " • " + u.classId.replace("11 Kimia ","K")) : "—";
+  else chip.textContent = "👨‍🏫 " + (u ? u.name : "Guru");
+
+  if(App.role === "teacher"){
+    nav.innerHTML =
+      '<button data-nav="teacher"><span class="e">📊</span>Data Kelas</button>' +
+      '<button data-nav="materi"><span class="e">📚</span>Materi</button>';
+  } else {
+    nav.innerHTML =
+      '<button data-nav="home"><span class="e">🏠</span>Beranda</button>' +
+      '<button data-nav="materi"><span class="e">📚</span>Materi</button>' +
+      '<button data-nav="quiz"><span class="e">📝</span>Kuis</button>' +
+      '<button data-nav="game"><span class="e">🎮</span>Petualangan</button>' +
+      '<button data-nav="rank"><span class="e">🏆</span>Peringkat</button>';
+  }
+  nav.classList.add("show");
+  nav.querySelectorAll("button").forEach(b => b.classList.toggle("active", b.dataset.nav === App.nav));
+}
+function go(nav){
+  App.nav = nav; Sfx.click();
+  if(nav === "home")    renderHome();
+  if(nav === "materi")  renderMateri();
+  if(nav === "tujuan")  showScreen("tujuan");
+  if(nav === "quiz")    renderQuizHome();
+  if(nav === "game")    renderGameHome();
+  if(nav === "rank")    renderRank();
+  if(nav === "teacher") renderTeacher();
+  showScreen(nav);
+  updateNav();
+}
+$("#nav").addEventListener("click", e => {
+  const b = e.target.closest("button[data-nav]");
+  if(b) go(b.dataset.nav);
+});
+$("#btn-mute").addEventListener("click", () => {
+  Sfx.muted = !Sfx.muted;
+  $("#btn-mute").textContent = Sfx.muted ? "🔇" : "🔊";
+  $("#btn-mute").classList.toggle("on", Sfx.muted);
+  toast(Sfx.muted ? "Suara dimatikan" : "Suara dinyalakan");
+});
+$("#btn-logout").addEventListener("click", () => {
+  openModal(
+    '<div class="m-hd"><span class="t">🚪 Keluar</span></div>' +
+    '<p>Yakin ingin keluar dari AsamBasa Lab? Progresmu sudah tersimpan otomatis.</p>' +
+    '<div class="btn-row" style="margin-top:16px">' +
+      '<button class="btn ghost" id="m-cancel">Batal</button>' +
+      '<button class="btn danger" id="m-confirm">Ya, Keluar</button>' +
+    '</div>');
+  $("#m-cancel").addEventListener("click", closeModal);
+  $("#m-confirm").addEventListener("click", () => {
+    persistUser(); clearSession();
+    App.role = null; App.key = null; App.teacherName = null;
+    closeModal();
+    $("#nav").classList.remove("show"); $("#topbar").classList.remove("show");
+    // reset login form
+    $("#in-kelas").value = ""; $("#in-nama").innerHTML = '<option value="">— Pilih kelas dulu —</option>';
+    $("#in-nama").disabled = true; $("#in-absen").value = "";
+    $("#in-gu-nama").value = ""; $("#in-gu-kode").value = "";
+    showScreen("login");
+    toast("Kamu telah keluar. Sampai jumpa! 👋");
+  });
+});
+
+/* =====================================================================
+   BAGIAN 12 — LOGIN (Dropdown)
+   ===================================================================== */
+$("#tab-siswa").addEventListener("click", () => {
+  $("#tab-siswa").classList.add("active"); $("#tab-guru").classList.remove("active");
+  $("#form-siswa").classList.remove("hidden"); $("#form-guru").classList.add("hidden");
+  Sfx.click();
+});
+$("#tab-guru").addEventListener("click", () => {
+  $("#tab-guru").classList.add("active"); $("#tab-siswa").classList.remove("active");
+  $("#form-guru").classList.remove("hidden"); $("#form-siswa").classList.add("hidden");
+  Sfx.click();
+});
+
+function showAlert(el, msg){ el.textContent = msg; el.classList.add("show"); setTimeout(()=>el.classList.remove("show"), 5000); }
+
+/* Saat kelas dipilih → isi dropdown nama siswa */
+$("#in-kelas").addEventListener("change", () => {
+  const kelas = $("#in-kelas").value;
+  const sel = $("#in-nama");
+  const absenInp = $("#in-absen");
+  if(!kelas){
+    sel.innerHTML = '<option value="">— Pilih kelas dulu —</option>';
+    sel.disabled = true;
+    absenInp.value = "";
+    return;
+  }
+  const list = ROSTER[kelas] || [];
+  sel.innerHTML = '<option value="">— Pilih nama —</option>' +
+    list.map((n,i) => '<option value="'+(i+1)+'">'+(i+1)+'. '+esc(n)+'</option>').join("");
+  sel.disabled = false;
+  absenInp.value = "";
+  sel.focus();
+});
+
+/* Saat nama dipilih → isi absen otomatis */
+$("#in-nama").addEventListener("change", () => {
+  const absen = $("#in-nama").value;
+  $("#in-absen").value = absen ? ("Absen " + absen) : "";
+});
+
+/* Login siswa */
+$("#btn-login").addEventListener("click", () => {
+  const kelas = $("#in-kelas").value;
+  const absen = parseInt($("#in-nama").value, 10);
+  const al = $("#al-login");
+  if(!kelas){ showAlert(al, "⚠️ Silakan pilih kelas terlebih dahulu."); return; }
+  if(!absen){ showAlert(al, "⚠️ Silakan pilih namamu dari daftar."); return; }
+  const nama = ROSTER[kelas][absen - 1];
+  if(!nama){ showAlert(al, "❌ Data siswa tidak ditemukan."); return; }
+  const s = getOrCreateStudent(kelas, absen, nama);
+  App.role = "student"; App.key = studentKey(kelas, absen); App.teacherName = null;
+  s.lastSeen = nowISO(); saveDB(); saveSession();
+  Sfx.win(); Confetti.burst(70);
+  toast("Selamat datang, " + nama.split(" ")[0] + "! ⚗️");
+  go("home");
+});
+
+/* Login guru */
+$("#in-gu-nama").addEventListener("change", () => {
+  const nama = $("#in-gu-nama").value;
+  const g = TEACHERS.find(x => x.name === nama);
+  $("#in-gu-kode").value = g ? g.code : "";
+});
+
+$("#btn-login-guru").addEventListener("click", () => {
+  const nama = $("#in-gu-nama").value.trim();
+  const kode = $("#in-gu-kode").value.trim().toUpperCase();
+  const al = $("#al-guru");
+  if(!nama){ showAlert(al, "⚠️ Silakan pilih nama guru terlebih dahulu."); return; }
+  const g = DB.teachers[nama];
+  if(!g){ showAlert(al, "❌ Data guru tidak ditemukan."); return; }
+  if(String(g.code).toUpperCase() !== kode){
+    showAlert(al, "❌ Kode guru tidak cocok.");
+    return;
+  }
+  ensureProgress(g);
+  App.role = "teacher"; App.teacherName = g.name; App.key = null;
+  g.lastSeen = nowISO(); saveDB(); saveSession();
+  Sfx.win(); Confetti.burst(70);
+  toast("Selamat datang, " + g.name + " 👨‍🏫");
+  go("teacher");
+});
+
+/* =====================================================================
+   BAGIAN 13 — BERANDA SISWA
+   ===================================================================== */
+const PLAYER_LEVELS = [
+  { min:0,   name:"Pemula",            icon:"🧫" },
+  { min:200, name:"Peneliti Muda",     icon:"🔬" },
+  { min:500, name:"Ahli Kimia",        icon:"⚗️" },
+  { min:900, name:"Profesor Asam Basa",icon:"👑" }
+];
+function playerLevel(xp){
+  let lv = PLAYER_LEVELS[0], next = null;
+  for(let i=0;i<PLAYER_LEVELS.length;i++){
+    if(xp >= PLAYER_LEVELS[i].min){ lv = PLAYER_LEVELS[i]; next = PLAYER_LEVELS[i+1] || null; }
+  }
+  return { cur: lv, next: next };
+}
+const ALL_BADGES = [
+  { id:"pemburu-h",   n:"Pemburu H⁺",     ic:"🎯", d:"Selesaikan Level 1 — Lab Arrhenius" },
+  { id:"arena-bl",    n:"Arena Master",   ic:"⚔️", d:"Selesaikan Level 2 — Arena Brønsted-Lowry" },
+  { id:"konjugasi",   n:"Master Konjugasi",ic:"🔗", d:"Selesaikan Level 3 — Misi Pasangan Konjugasi" },
+  { id:"elektron",    n:"Elektron Hunter",ic:"⚡", d:"Selesaikan Level 4 — Dunia Lewis" },
+  { id:"detektif",    n:"Detektif Amfoter",ic:"🕵️", d:"Selesaikan Level 5 — Detektif Amfoter" },
+  { id:"tanpa-salah", n:"Tanpa Salah",    ic:"💎", d:"Selesaikan satu level tanpa kehilangan nyawa" },
+  { id:"juara",       n:"Juara Kuis",     ic:"🏅", d:"Dapatkan skor sempurna di kuis mana pun" },
+  { id:"profesor",    n:"Profesor Asam Basa", ic:"👑", d:"Kalahkan Boss — Pertarungan Akhir" }
+];
+function hasBadge(u, id){ return (u.badges||[]).some(b => b.id === id); }
+function giveBadge(id, silent){
+  const u = currentUser(); if(!u) return;
+  if(hasBadge(u, id)) return;
+  const b = ALL_BADGES.find(x => x.id === id); if(!b) return;
+  u.badges.push({ id:b.id, n:b.n, ic:b.ic, at: nowISO() });
+  saveDB();
+  if(!silent) toast("🏅 Badge baru: " + b.n + "!");
+}
+function quizTotal(u){
+  let t = 0;
+  for(let i=1;i<=4;i++){ t += (u.quiz && u.quiz[i] ? u.quiz[i].best : 0) || 0; }
+  return t;
+}
+function gameStars(u){
+  let t = 0; const lv = (u.game && u.game.levels) || {};
+  Object.keys(lv).forEach(k => t += (lv[k].stars||0));
+  return t;
+}
+
+function renderHome(){
+  const u = currentUser(); if(!u) return;
+  ensureProgress(u);
+  const pl = playerLevel(u.xp);
+  const nextXp = pl.next ? pl.next.min : u.xp;
+  const prevXp = pl.cur.min;
+  const pct = pl.next ? Math.min(100, ((u.xp - prevXp) / (nextXp - prevXp)) * 100) : 100;
+
+  $("#home-greet").innerHTML =
+    '<div style="display:flex;align-items:center;gap:14px">' +
+      '<div style="font-size:38px;line-height:1">'+pl.cur.icon+'</div>' +
+      '<div style="flex:1;min-width:0">' +
+        '<div style="font-size:15px;font-weight:800;color:#1a2340">Halo, '+esc(u.name.split(" ")[0])+'! 👋</div>' +
+        '<div class="small muted" style="margin-top:2px">'+esc(u.classId)+' • Absen '+u.absen+'</div>' +
+        '<div style="margin-top:8px;display:flex;align-items:center;gap:7px;flex-wrap:wrap">' +
+          '<span class="pill" style="background:linear-gradient(135deg,rgba(255,107,53,.18),rgba(168,85,247,.15));color:#b8451f;font-weight:800">'+pl.cur.name+'</span>' +
+          '<span class="small" style="color:var(--warn);font-weight:800">'+u.xp+' XP</span>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div style="margin-top:14px">' +
+      '<div class="xpbar"><i style="width:'+pct.toFixed(1)+'%"></i></div>' +
+      '<div class="tiny muted" style="margin-top:6px;font-weight:600">' +
+        (pl.next ? (nextXp - u.xp) + " XP lagi menuju " + pl.next.name : "Level tertinggi tercapai! 🎉") +
+      '</div>' +
+    '</div>';
+
+  const badgesHtml = ALL_BADGES.map(b => {
+    const owned = hasBadge(u, b.id);
+    return '<span class="badge'+(owned?"":" locked")+'" title="'+esc(b.d)+'">'+b.ic+' '+esc(b.n)+'</span>';
+  }).join("");
+
+  $("#home-body").innerHTML =
+    '<div class="stat-grid">' +
+      '<div class="stat"><span class="ic">📝</span><div class="v">'+quizTotal(u)+'<small>/16</small></div><div class="k">SKOR KUIS TERBAIK</div></div>' +
+      '<div class="stat"><span class="ic">🎮</span><div class="v">'+gameStars(u)+'<small>/18</small></div><div class="k">BINTANG PETUALANGAN</div></div>' +
+      '<div class="stat"><span class="ic">⭐</span><div class="v">'+u.xp+'</div><div class="k">TOTAL XP</div></div>' +
+      '<div class="stat"><span class="ic">🏅</span><div class="v">'+(u.badges||[]).length+'<small>/'+ALL_BADGES.length+'</small></div><div class="k">BADGE DIKUMPULKAN</div></div>' +
+    '</div>' +
+
+    '<div class="card">' +
+      '<h2>🚀 Menu Cepat</h2>' +
+      '<div class="menu-grid">' +
+        '<button class="menu-tile a" data-go="materi"><span class="e">📚</span><span class="t">Materi</span><span class="s">Arrhenius, Brønsted-Lowry, Lewis</span></button>' +
+        '<button class="menu-tile b" data-go="quiz"><span class="e">📝</span><span class="t">Kuis</span><span class="s">4 tingkat kesulitan</span></button>' +
+        '<button class="menu-tile c" data-go="game"><span class="e">🎮</span><span class="t">Petualangan</span><span class="s">6 level + boss</span></button>' +
+        '<button class="menu-tile d" data-go="tujuan"><span class="e">🎯</span><span class="t">Tujuan</span><span class="s">Capaian pembelajaran</span></button>' +
+      '</div>' +
+    '</div>' +
+
+    '<div class="card">' +
+      '<h2>🏅 Koleksi Badge</h2>' +
+      '<div>'+badgesHtml+'</div>' +
+    '</div>' +
+
+    '<div class="card">' +
+      '<h2>📈 Riwayat Kuis Terakhir</h2>' +
+      (function(){
+        const h = (u.quizHistory||[]).slice(-4).reverse();
+        if(!h.length) return '<p class="small muted">Belum ada riwayat kuis. Ayo kerjakan kuis pertamamu!</p>';
+        return h.map(r =>
+          '<div class="rank-row" style="margin-bottom:8px">' +
+            '<div class="pos">'+r.score+'</div>' +
+            '<div class="nm"><div class="n">Kuis '+esc(r.levelName)+'</div><div class="c">'+fmtDate(r.at)+' • '+r.correct+'/'+r.total+' benar</div></div>' +
+            '<div class="xp">'+Math.round(r.correct/r.total*100)+'%</div>' +
+          '</div>').join("");
+      })() +
+    '</div>';
+}
+
+document.addEventListener("click", e => {
+  const t = e.target.closest("[data-go]");
+  if(t){ go(t.dataset.go); }
+});
+
+/* =====================================================================
+   BAGIAN 14 — MATERI
+   ===================================================================== */
+function renderMateri(){
+  const data = [
+    { n:"A", t:"Pendahuluan — Konsep Dasar Asam Basa",
+      b:'<div class="box n"><b>Secara umum:</b><br><b class="asam-t">Asam</b> → rasa masam, bersifat korosif (merusak).<br><b class="basa-t">Basa</b> → rasa pahit, melarutkan lemak, bersifat kaustik (licin).</div>' +
+        '<h3>Pandangan awal para ilmuwan</h3><ul class="tick">' +
+        '<li><b>Lavoisier</b> — zat penyebab sifat asam adalah <b>oksigen</b>.</li>' +
+        '<li><b>Sir H. Davy</b> — zat penyebab sifat asam adalah <b>hidrogen</b>.</li>' +
+        '<li><b>Gay-Lussac</b> — asam dan basa adalah zat yang <b>saling menetralkan</b> satu sama lain.</li></ul>' +
+        '<div class="box g">Pandangan-pandangan tersebut kemudian disempurnakan oleh teori asam-basa yang digunakan hingga sekarang: <b>Arrhenius</b>, <b>Brønsted-Lowry</b>, dan <b>Lewis</b>.</div>' },
+    { n:"B", t:"Teori Asam-Basa Arrhenius (1884)",
+      b:'<div class="box a"><b>Asam Arrhenius:</b> pembawa sifat asam adalah ion <b>H⁺</b>, dan asam <b>melepaskan ion H⁺</b> dalam air.</div>' +
+        '<div class="eq">H<sub>x</sub>A(aq) → xH⁺(aq) + A<sup>x−</sup>(aq)</div>' +
+        '<div class="box b"><b>Basa Arrhenius:</b> pembawa sifat basa adalah ion <b>OH⁻</b>, dan basa <b>melepaskan ion OH⁻</b> dalam air.</div>' +
+        '<div class="eq">B(OH)<sub>x</sub>(aq) → B<sup>x+</sup>(aq) + xOH⁻(aq)</div>' +
+        '<h3>Contoh</h3><div class="eq">NaOH → Na⁺ + OH⁻ &nbsp;|&nbsp; Mg(OH)₂ ⇌ Mg²⁺ + 2OH⁻</div>' +
+        '<h3>Macam-macam asam</h3><ul class="tick">' +
+        '<li><b>Asam monovalen</b> (satu valensi asam): HCl, HF, HBr.</li>' +
+        '<li><b>Asam polivalen</b> (banyak valensi asam): H₂SO₄ (divalen), H₃PO₃ (trivalen).</li></ul>' +
+        '<h3>Kekurangan teori Arrhenius</h3><ul class="tick">' +
+        '<li class="no">Hanya dapat menjelaskan sifat asam-basa apabila zat dilarutkan <b>dalam air</b>.</li>' +
+        '<li class="no">Tidak dapat menjelaskan sifat basa <b>amonia (NH₃)</b> dan <b>natrium karbonat (Na₂CO₃)</b> yang tidak mengandung ion OH⁻ namun menghasilkan ion OH⁻ dalam air.</li></ul>' +
+        '<div class="box w"><b>Kekuatan asam-basa Arrhenius</b> didasarkan atas [H⁺] dan [OH⁻]: asam kuat → [H⁺] besar; basa kuat → [OH⁻] besar.</div>' },
+    { n:"C", t:"Teori Asam-Basa Brønsted-Lowry (1923)",
+      b:'<div class="box n">Menurut Brønsted-Lowry, asam dan basa hanya terionisasi dalam air karena:<br>1) Air <b>menarik</b> ion H⁺ sehingga membentuk ion hidronium (H₃O⁺);<br>2) Air <b>melepas</b> ion H⁺ sehingga membentuk ion hidroksida (OH⁻).</div>' +
+        '<div class="eq">HCl + H₂O → Cl⁻ + H₃O⁺<br>NH₃ + H₂O ⇌ NH₄⁺ + OH⁻</div>' +
+        '<div class="box a"><b>Asam</b> = spesi yang merupakan <b>donor proton (H⁺)</b>.</div>' +
+        '<div class="box b"><b>Basa</b> = spesi yang merupakan <b>akseptor proton (H⁺)</b>.</div>' +
+        '<h3>Pasangan konjugasi</h3><ul class="tick">' +
+        '<li>Asam yang telah melepaskan satu proton akan membentuk <b>basa konjugasi</b>.</li>' +
+        '<li>Basa yang telah menerima satu proton akan membentuk <b>asam konjugasi</b>.</li></ul>' +
+        '<div class="eq">HCl → H⁺ + Cl⁻<br>H₂SO₄ → H⁺ + HSO₄⁻<br>H₃PO₄ → H⁺ + H₂PO₄⁻<br>NH₄⁺ → H⁺ + NH₃</div>' +
+        '<h3>Kelebihan teori Brønsted-Lowry</h3><ul class="tick">' +
+        '<li>Dapat menjelaskan sifat asam-basa zat pada pelarut dan larutan selain air, bahkan tanpa pelarut.</li>' +
+        '<li>Dapat menjelaskan sifat asam-basa kation dan anion.</li>' +
+        '<li>Dapat menjelaskan zat yang bersifat <b>amfoter/amfiprotik</b>.</li></ul>' +
+        '<div class="box w"><b>Kelemahan:</b> tidak dapat menjelaskan sifat asam-basa yang tidak melibatkan transfer proton.</div>' +
+        '<h3>Kekuatan asam-basa (relatif)</h3><ul class="tick">' +
+        '<li>Asam kuat mudah melepas proton; asam lemah sukar melepas proton.</li>' +
+        '<li>Basa kuat mudah menarik proton; basa lemah sukar menarik proton.</li>' +
+        '<li>Kekuatan asam <b>berbanding terbalik</b> dengan kekuatan basa konjugasinya.</li>' +
+        '<li>Kekuatan basa <b>berbanding terbalik</b> dengan kekuatan asam konjugasinya.</li></ul>' },
+    { n:"D", t:"Teori Asam-Basa Lewis (1923)",
+      b:'<div class="box n">Menurut Lewis, transfer proton terjadi karena adanya <b>pasangan elektron bebas pada basa</b>, yang kemudian membentuk ikatan kovalen koordinasi dengan proton tersebut.</div>' +
+        '<div class="box a"><b>Asam Lewis</b> = spesi <b>akseptor</b> (penerima) pasangan elektron.</div>' +
+        '<div class="box b"><b>Basa Lewis</b> = spesi <b>donor</b> (pemberi) pasangan elektron.</div>' +
+        '<h3>Kelebihan teori Lewis</h3><ul class="tick">' +
+        '<li>Dapat menjelaskan sifat asam-basa yang tidak melibatkan transfer proton.</li>' +
+        '<li>Dapat menjelaskan sifat asam-basa senyawa yang memiliki pasangan elektron bebas.</li>' +
+        '<li>Dapat menjelaskan sifat asam-basa senyawa organik seperti protein dan DNA.</li></ul>' +
+        '<h3>Kekurangan teori Lewis</h3><ul class="tick">' +
+        '<li class="no">Hanya dapat menjelaskan sifat asam-basa zat atau ion yang mencapai <b>kaidah oktet</b>.</li>' +
+        '<li class="no">Hanya dapat menjelaskan sifat asam-basa <b>senyawa kovalen</b>.</li></ul>' }
+  ];
+  $("#materi-acc").innerHTML = data.map((d,i) =>
+    '<div class="acc'+(i===0?" open":"")+'" data-acc="'+i+'">' +
+      '<button class="hd"><span class="n">'+d.n+'</span><span style="flex:1">'+esc(d.t)+'</span><span class="arw">▶</span></button>' +
+      '<div class="bd">'+d.b+'</div>' +
+    '</div>').join("");
+  $$("#materi-acc .hd").forEach(h => {
+    h.addEventListener("click", () => { Sfx.click(); h.parentElement.classList.toggle("open"); });
+  });
+}
+
+/* =====================================================================
+   BAGIAN 15 — KUIS
+   ===================================================================== */
+function renderQuizHome(){
+  const u = currentUser(); if(!u) return;
+  ensureProgress(u);
+  const total = quizTotal(u);
+  let html =
+    '<div class="card"><h2>📝 Kuis Teori Asam-Basa</h2>' +
+      '<p class="small muted">Pilih tingkat kesulitan. Setiap tingkat berisi <b>4 soal</b> dengan pembahasan lengkap setiap jawaban.</p>' +
+      '<div class="xpbar" style="margin-top:12px"><i style="width:'+(total/16*100)+'%"></i></div>' +
+      '<div class="tiny muted center" style="margin-top:8px;font-weight:700">Total skor terbaik: <b style="color:var(--warn)">'+total+' / 16</b></div>' +
+    '</div>';
+  for(let i=1;i<=4;i++){
+    const L = QUIZ_BANK[i];
+    const rec = (u.quiz && u.quiz[i]) || {best:0, attempts:0};
+    html +=
+      '<button class="lv-card" data-quiz="'+i+'">' +
+        '<span class="num" style="background:'+L.color+'">'+L.icon+'</span>' +
+        '<span class="info"><span class="t">Level '+i+' — '+L.name+'</span><span class="s">'+L.desc+' • 4 soal</span></span>' +
+        '<span class="sc">'+(rec.best?rec.best+"/4":"—")+'</span>' +
+      '</button>';
+  }
+  html +=
+    '<div class="card" style="margin-top:14px"><h2>🏆 Peringkat Kuis</h2>' +
+      '<p class="small muted">Peringkat dihitung dari total skor terbaik seluruh pengguna yang sudah masuk.</p>' +
+      '<button class="btn ghost sm" data-go="rank" style="margin-top:8px">Lihat Peringkat Lengkap →</button></div>';
+  $("#quiz-body").innerHTML = html;
+  $("#quiz-body").querySelectorAll("[data-quiz]").forEach(b => {
+    b.addEventListener("click", () => startQuiz(parseInt(b.dataset.quiz,10)));
+  });
+  $("#quiz-body").querySelectorAll("[data-go]").forEach(b => {
+    b.addEventListener("click", () => go(b.dataset.go));
+  });
+}
+
+function startQuiz(levelNum){
+  Sfx.click();
+  const L = QUIZ_BANK[levelNum];
+  const qs = shuffle(L.qs.map((q,i) => ({...q, idx:i})));
+  App.quiz = { level: levelNum, levelName: L.name, qs, cur: 0, correct: 0, wrong: 0, answered: false, startTime: Date.now(), log: [] };
+  renderQuizQuestion();
+}
+
+function renderQuizQuestion(){
+  const Q = App.quiz; if(!Q) return;
+  if(Q.cur >= Q.qs.length){ finishQuiz(); return; }
+  const q = Q.qs[Q.cur];
+  const L = QUIZ_BANK[Q.level];
+  const prog = (Q.cur / Q.qs.length) * 100;
+  $("#quiz-body").innerHTML =
+    '<div class="card">' +
+      '<div class="q-head">' +
+        '<button class="icon-btn" id="q-back" style="width:34px;height:34px;font-size:13px">←</button>' +
+        '<span class="pill" style="background:'+L.color+';color:#fff;font-weight:800">Level '+Q.level+' • '+L.name+'</span>' +
+        '<div class="prog"><i style="width:'+prog+'%"></i></div>' +
+        '<span class="small muted" style="font-weight:700">'+(Q.cur+1)+'/'+Q.qs.length+'</span>' +
+      '</div>' +
+      '<div class="q-text">'+esc(q.t)+'</div>' +
+      '<div id="q-opts">' +
+        q.o.map((o,i) => '<button class="opt" data-opt="'+i+'"><span class="ltr">'+"ABCD"[i]+'</span><span>'+esc(o)+'</span></button>').join("") +
+      '</div><div id="q-fb"></div></div>';
+  $("#q-back").addEventListener("click", () => {
+    openModal(
+      '<div class="m-hd"><span class="t">⏸️ Keluar dari Kuis?</span></div>' +
+      '<p>Progres kuis level ini akan hilang.</p>' +
+      '<div class="btn-row" style="margin-top:16px">' +
+        '<button class="btn ghost" id="m-cancel">Lanjut Kuis</button>' +
+        '<button class="btn danger" id="m-confirm">Keluar</button>' +
+      '</div>');
+    $("#m-cancel").addEventListener("click", closeModal);
+    $("#m-confirm").addEventListener("click", () => { closeModal(); App.quiz = null; renderQuizHome(); showScreen("quiz"); });
+  });
+  $("#q-opts").querySelectorAll("[data-opt]").forEach(b => {
+    b.addEventListener("click", () => answerQuiz(parseInt(b.dataset.opt,10)));
+  });
+  Q.answered = false;
+}
+
+function answerQuiz(pick){
+  const Q = App.quiz; if(!Q || Q.answered) return;
+  Q.answered = true;
+  const q = Q.qs[Q.cur];
+  const correct = pick === q.a;
+  $$("#q-opts .opt").forEach((b,i) => {
+    if(i === q.a) b.classList.add("correct");
+    else if(i === pick) b.classList.add("wrong");
+    else b.classList.add("dim");
+  });
+  if(correct){ Q.correct++; Sfx.correct(); } else { Q.wrong++; Sfx.wrong(); }
+  Q.log.push({ tag:q.tag, correct, t:q.t });
+  $("#q-fb").innerHTML =
+    '<div class="fb '+(correct?"good":"bad")+'">' +
+      '<div class="ttl">'+(correct?"✅ Benar!":"❌ Belum tepat")+'</div>' +
+      '<div>'+esc(q.e)+'</div>' +
+      (correct ? "" : '<div class="hint">💡 <b>Ingat:</b> '+esc(q.h)+'</div>') +
+      '<button class="btn '+(correct?"green":"primary")+'" id="q-next" style="margin-top:14px">' +
+        (Q.cur === Q.qs.length-1 ? "Lihat Hasil 🎉" : "Soal Berikutnya →") +
+      '</button></div>';
+  $("#q-next").addEventListener("click", () => { Q.cur++; renderQuizQuestion(); });
+}
+
+function finishQuiz(){
+  const Q = App.quiz; const u = currentUser(); if(!Q || !u) return;
+  const total = Q.qs.length; const dur = Date.now() - Q.startTime;
+  const pct = Math.round(Q.correct / total * 100);
+  ensureProgress(u);
+  if(!u.quiz[Q.level]) u.quiz[Q.level] = {best:0, attempts:0};
+  u.quiz[Q.level].attempts++;
+  const isBest = Q.correct > u.quiz[Q.level].best;
+  if(isBest) u.quiz[Q.level].best = Q.correct;
+  u.quizHistory.push({ level:Q.level, levelName:Q.levelName, score:Q.correct, total, correct:Q.correct, at:nowISO(), duration:dur });
+  if(u.quizHistory.length > 40) u.quizHistory = u.quizHistory.slice(-40);
+  u.xp += Q.correct * 12;
+  if(pct === 100){ giveBadge("juara", true); }
+  saveDB();
+
+  const tagErr = {};
+  Q.log.forEach(l => { if(!l.correct) tagErr[l.tag] = (tagErr[l.tag]||0)+1; });
+  const weak = Object.keys(tagErr).sort((a,b)=>tagErr[b]-tagErr[a]);
+  if(pct >= 75){ Sfx.win(); Confetti.burst(90); } else { Sfx.levelUp(); }
+
+  let html =
+    '<div class="card center">' +
+      '<div style="font-size:52px">'+(pct>=75?"🎉":pct>=50?"💪":"📖")+'</div>' +
+      '<h1 style="margin:10px 0 4px">'+pct+'%</h1>' +
+      '<p class="small muted">Kuis Level '+Q.level+' — '+esc(Q.levelName)+'</p>' +
+      '<div class="stat-grid" style="margin-top:16px">' +
+        '<div class="stat"><div class="v ok-t">'+Q.correct+'</div><div class="k">BENAR</div></div>' +
+        '<div class="stat"><div class="v bad-t">'+Q.wrong+'</div><div class="k">SALAH</div></div>' +
+        '<div class="stat"><div class="v">'+fmtTime(dur)+'</div><div class="k">WAKTU</div></div>' +
+        '<div class="stat"><div class="v" style="color:var(--warn)">+'+(Q.correct*12)+'</div><div class="k">XP DIDAPAT</div></div>' +
+      '</div>' +
+      (isBest && Q.correct>0 ? '<div class="box g" style="text-align:left;margin-top:8px">🌟 <b>Rekor baru!</b> Skor terbaikmu untuk level ini meningkat.</div>' : '') +
+    '</div>';
+
+  html += '<div class="card"><h2>📋 Rekap Jawaban</h2>' +
+    Q.log.map((l,i) =>
+      '<div class="rank-row" style="margin-bottom:8px">' +
+        '<div class="pos" style="'+(l.correct?"background:#d1fae5;color:#065f46":"background:#fee2e2;color:#991b1b")+'">'+(i+1)+'</div>' +
+        '<div class="nm"><div class="n">'+esc(l.t.length>52 ? l.t.slice(0,52)+"…" : l.t)+'</div><div class="c">Konsep: '+esc(l.tag)+'</div></div>' +
+        '<div class="xp">'+(l.correct?"✔":"✘")+'</div>' +
+      '</div>').join("") + '</div>';
+
+  if(weak.length){
+    html += '<div class="card"><h2>🔍 Konsep yang Perlu Diperkuat</h2>' +
+      weak.map(t => '<span class="badge" style="background:#fee2e2;border-color:#fca5a5;color:#991b1b">⚠️ '+esc(t)+' ('+tagErr[t]+' salah)</span>').join("") +
+      '<p class="small muted" style="margin-top:12px">Buka menu <b>Materi</b> untuk membaca ulang bagian tersebut.</p>' +
+      '<button class="btn ghost sm" id="q-materi" style="margin-top:12px">📚 Lihat Ringkasan Materi</button></div>';
+  }
+  html += '<div class="btn-row" style="margin-bottom:14px">' +
+      '<button class="btn ghost" id="q-home">🏠 Menu Kuis</button>' +
+      '<button class="btn primary" id="q-again">🔄 Ulangi</button></div>';
+
+  $("#quiz-body").innerHTML = html;
+  const mkBtn = (id, fn) => { const b = $("#"+id); if(b) b.addEventListener("click", fn); };
+  mkBtn("q-home", () => { App.quiz = null; renderQuizHome(); showScreen("quiz"); });
+  mkBtn("q-again", () => startQuiz(Q.level));
+  mkBtn("q-materi", () => { App.quiz = null; go("materi"); });
+  App.quiz = null;
+  showScreen("quiz");
+}
+
+/* =====================================================================
+   BAGIAN 16 — GAMIFIKASI
+   ===================================================================== */
+const LEVEL_INFO = [
+  { n:1, t:"Lab Arrhenius",           ic:"🧪", s:"Pisahkan asam & basa ke keranjang" },
+  { n:2, t:"Arena Brønsted-Lowry",    ic:"⚔️", s:"Tentukan donor & akseptor proton" },
+  { n:3, t:"Misi Pasangan Konjugasi", ic:"🔗", s:"Jodohkan pasangan asam-basa konjugasi" },
+  { n:4, t:"Dunia Lewis",             ic:"⚡", s:"Kenali asam & basa Lewis" },
+  { n:5, t:"Detektif Amfoter",        ic:"🕵️", s:"Temukan zat amfoter" },
+  { n:6, t:"BOSS: Pertarungan Akhir", ic:"👹", s:"10 soal campuran • 20 detik per soal" }
+];
+function gameState(){ const u = currentUser(); if(!u) return null; ensureProgress(u); return u.game; }
+
+function renderGameHome(){
+  const u = currentUser(); if(!u) return;
+  ensureProgress(u);
+  const g = gameState();
+  const pl = playerLevel(u.xp);
+  let html =
+    '<div class="card">' +
+      '<div style="display:flex;align-items:center;gap:12px">' +
+        '<div style="font-size:34px;line-height:1">'+pl.cur.icon+'</div>' +
+        '<div style="flex:1;min-width:0">' +
+          '<div style="font-weight:800;font-size:14px;color:#1a2340">'+pl.cur.name+'</div>' +
+          '<div class="small muted" style="margin-top:2px">'+u.xp+' XP • '+gameStars(u)+'/18 ⭐</div>' +
+        '</div>' +
+        '<button class="icon-btn" id="g-materi" title="Ringkasan Materi">📖</button>' +
+      '</div></div>';
+
+  LEVEL_INFO.forEach(L => {
+    const rec = g.levels[L.n] || null;
+    const locked = L.n > g.unlocked;
+    const done = !!rec;
+    const st = rec ? rec.stars : 0;
+    html +=
+      '<button class="lvl-node '+(locked?"locked":"")+' '+(done?"done":"")+' '+(L.n===6?"boss":"")+'" '+(locked?'disabled':'data-lvl="'+L.n+'"')+'>' +
+        '<span class="orb">'+(locked?"🔒":L.ic)+'</span>' +
+        '<span class="meta"><span class="t">Level '+L.n+' — '+L.t+'</span><span class="s">'+L.s+'</span></span>' +
+        '<span class="stars">'+(done ? "⭐".repeat(st) + "☆".repeat(3-st) : (locked?"":"▸"))+'</span>' +
+      '</button>';
+  });
+
+  html +=
+    '<div class="card" style="margin-top:14px"><h2>📜 Badge Petualangan</h2><div>' +
+      ALL_BADGES.map(b => {
+        const owned = hasBadge(u, b.id);
+        return '<span class="badge'+(owned?"":" locked")+'">'+b.ic+' '+esc(b.n)+'</span>';
+      }).join("") + '</div></div>' +
+    '<div class="card"><h2>🏆 Leaderboard Lokal</h2>' +
+      '<p class="small muted">10 skor XP tertinggi dari semua pengguna yang sudah masuk.</p>' +
+      '<button class="btn ghost sm" data-go="rank" style="margin-top:10px">Lihat Peringkat →</button></div>';
+
+  $("#game-body").innerHTML = html;
+  $("#game-body").querySelectorAll("[data-lvl]").forEach(b => {
+    b.addEventListener("click", () => startLevel(parseInt(b.dataset.lvl,10)));
+  });
+  const gm = $("#g-materi"); if(gm) gm.addEventListener("click", showMateriRingkas);
+  $("#game-body").querySelectorAll("[data-go]").forEach(b => b.addEventListener("click", ()=>go(b.dataset.go)));
+}
+
+function showMateriRingkas(){
+  openModal(
+    '<div class="m-hd"><span class="t">📖 Ringkasan Materi</span><button class="icon-btn" id="m-x">✕</button></div>' +
+    '<div class="box a"><b>Arrhenius (1884)</b><br>Asam = melepas H⁺ dalam air. Basa = melepas OH⁻ dalam air.</div>' +
+    '<div class="box b"><b>Brønsted-Lowry (1923)</b><br>Asam = donor proton (H⁺). Basa = akseptor proton (H⁺).<br>Sisa asam setelah melepas H⁺ = basa konjugasi. Basa setelah menerima H⁺ = asam konjugasi.</div>' +
+    '<div class="box n"><b>Lewis (1923)</b><br>Asam = akseptor pasangan elektron. Basa = donor pasangan elektron.</div>' +
+    '<div class="box w"><b>Amfoter / amfiprotik</b><br>Zat yang bisa berperan sebagai asam maupun basa. Contoh: H₂O, HCO₃⁻, HSO₄⁻.</div>' +
+    '<div class="box g"><b>Kekuatan relatif</b><br>Asam kuat ↔ basa konjugasi lemah. Basa kuat ↔ asam konjugasi lemah.</div>' +
+    '<button class="btn primary" id="m-close" style="margin-top:16px">Mengerti 👍</button>');
+  $("#m-x").addEventListener("click", closeModal);
+  $("#m-close").addEventListener("click", closeModal);
+}
+
+function newLevelState(n){ return { n, hearts:3, correct:0, wrong:0, xp:0, streak:0, start:Date.now(), tags:{} }; }
+function heartsHtml(h){ let s = ""; for(let i=0;i<3;i++) s += '<span class="heart'+(i<h?"":" dead")+'">❤️</span>'; return s; }
+function renderHearts(st){ const el = $("#hearts"); if(el) el.innerHTML = heartsHtml(st.hearts); }
+function loseHeart(st){
+  st.hearts--; renderHearts(st); Sfx.wrong();
+  if(st.hearts <= 0){ levelFailed(st); return true; }
+  return false;
+}
+function addXp(st, correct, fast){
+  if(!correct) return 0;
+  let xp = 10;
+  if(fast) xp += 5;
+  st.streak++;
+  if(st.streak % 3 === 0) xp += 10;
+  st.xp += xp;
+  return xp;
+}
+function showFeedback(ok, text){
+  const el = $("#fstrip"); if(!el) return;
+  el.className = "fstrip show " + (ok ? "good" : "bad"); el.innerHTML = text;
+}
+function hideFeedback(){ const el = $("#fstrip"); if(el) el.className = "fstrip"; }
+
+function levelFailed(st){
+  Sfx.lose();
+  openModal(
+    '<div class="m-hd"><span class="t">💔 Nyawa Habis!</span></div>' +
+    '<div class="center" style="font-size:56px">😵</div>' +
+    '<p class="center">Kamu kehabisan 3 nyawa di <b>Level '+st.n+'</b>. Tenang, level akan diulang dengan urutan soal yang diacak.</p>' +
+    '<div class="box w" style="margin-top:12px">💡 <b>Tips:</b> Buka tombol 📖 Ringkasan Materi selama bermain jika lupa konsepnya.</div>' +
+    '<button class="btn primary" id="m-retry" style="margin-top:14px">🔄 Ulangi Level</button>' +
+    '<button class="btn ghost" id="m-map" style="margin-top:10px">🗺️ Kembali ke Peta</button>');
+  $("#m-retry").addEventListener("click", () => { closeModal(); startLevel(st.n); });
+  $("#m-map").addEventListener("click", () => { closeModal(); App.game = null; renderGameHome(); showScreen("game"); });
+}
+
+function levelComplete(st, extra){
+  const u = currentUser(); if(!u) return;
+  ensureProgress(u);
+  const acc = st.correct / Math.max(1, st.correct + st.wrong);
+  let stars = 1;
+  if(st.hearts === 3 && acc >= 0.9) stars = 3;
+  else if(st.hearts >= 2 && acc >= 0.6) stars = 2;
+  else if(st.hearts === 3) stars = 3;
+
+  const g = gameState();
+  const rec = g.levels[st.n] || { stars:0, best:0, plays:0 };
+  rec.stars = Math.max(rec.stars, stars);
+  rec.plays++; rec.best = Math.max(rec.best, Math.round(acc*100)); rec.at = nowISO();
+  g.levels[st.n] = rec;
+  if(st.n >= g.unlocked && st.n < 6) g.unlocked = st.n + 1;
+
+  u.xp += st.xp;
+  if(st.hearts === 3) giveBadge("tanpa-salah", true);
+  if(st.n === 1) giveBadge("pemburu-h", true);
+  if(st.n === 2) giveBadge("arena-bl", true);
+  if(st.n === 3) giveBadge("konjugasi", true);
+  if(st.n === 4) giveBadge("elektron", true);
+  if(st.n === 5) giveBadge("detektif", true);
+  if(st.n === 6) giveBadge("profesor", true);
+  saveDB();
+  Sfx.win(); Confetti.burst(120);
+
+  const dur = Date.now() - st.start;
+  const weak = Object.keys(st.tags).filter(k => st.tags[k] > 0);
+  let html =
+    '<div class="card center">' +
+      '<div style="font-size:56px">'+(st.n===6?"🏆":"🎉")+'</div>' +
+      '<h1 style="margin:10px 0 0">Level '+st.n+' Selesai!</h1>' +
+      '<div class="stars" style="font-size:28px;margin:10px 0">'+"⭐".repeat(stars)+"☆".repeat(3-stars)+'</div>' +
+      '<p class="small muted">'+esc(LEVEL_INFO[st.n-1].t)+'</p>' +
+      '<div class="stat-grid" style="margin-top:16px">' +
+        '<div class="stat"><div class="v ok-t">'+st.correct+'</div><div class="k">BENAR</div></div>' +
+        '<div class="stat"><div class="v bad-t">'+st.wrong+'</div><div class="k">SALAH</div></div>' +
+        '<div class="stat"><div class="v">'+fmtTime(dur)+'</div><div class="k">WAKTU</div></div>' +
+        '<div class="stat"><div class="v" style="color:var(--warn)">+'+st.xp+'</div><div class="k">XP DIDAPAT</div></div>' +
+      '</div></div>';
+
+  if(weak.length){
+    html += '<div class="card"><h2>🔍 Konsep yang Masih Lemah</h2>' +
+      weak.map(k => '<span class="badge" style="background:#fee2e2;border-color:#fca5a5;color:#991b1b">⚠️ '+esc(k)+'</span>').join("") +
+      '<p class="small muted" style="margin-top:12px">Baca ulang materi tersebut agar level berikutnya lebih mudah.</p></div>';
+  }
+  if(st.n === 6 && extra){
+    html += '<div class="card"><h2>🎓 Sertifikat Digital</h2>' +
+      '<p class="small muted">Kamu berhasil mengalahkan Boss Pertarungan Akhir!</p>' +
+      '<img id="cert-img" alt="Sertifikat" style="width:100%;border-radius:14px;border:1px solid var(--line);margin-top:12px">' +
+      '<button class="btn green" id="cert-dl" style="margin-top:14px">⬇️ Unduh Sertifikat (PNG)</button></div>';
+  }
+  html += '<div class="btn-row" style="margin-bottom:14px">' +
+      '<button class="btn ghost" id="lv-map">🗺️ Peta Level</button>' +
+      '<button class="btn primary" id="lv-next">'+(st.n < 6 ? "Level Berikutnya →" : "Selesai")+'</button></div>';
+  openModal(html);
+  $("#lv-map").addEventListener("click", () => { closeModal(); App.game = null; renderGameHome(); showScreen("game"); });
+  $("#lv-next").addEventListener("click", () => {
+    closeModal();
+    if(st.n < 6) startLevel(st.n + 1);
+    else { App.game = null; renderGameHome(); showScreen("game"); }
+  });
+  if(st.n === 6 && extra){
+    const cvs = makeCertificate(u.name, u.classId || "Guru Kimia", u.xp, new Date());
+    const img = $("#cert-img"); const url = cvs.toDataURL("image/png"); img.src = url;
+    $("#cert-dl").addEventListener("click", () => {
+      const a = document.createElement("a");
+      a.href = url; a.download = "Sertifikat_AsamBasa_" + u.name.replace(/\s+/g,"_") + ".png"; a.click();
+    });
+  }
+}
+
+function makeCertificate(name, kelas, xp, date){
+  const c = document.createElement("canvas"); c.width = 1000; c.height = 700;
+  const x = c.getContext("2d");
+  const g = x.createLinearGradient(0,0,1000,700);
+  g.addColorStop(0,"#eef6ff"); g.addColorStop(0.5,"#fff8ee"); g.addColorStop(1,"#f0e9ff");
+  x.fillStyle = g; x.fillRect(0,0,1000,700);
+  x.strokeStyle = "#ffa94d"; x.lineWidth = 8; x.strokeRect(28,28,944,644);
+  x.strokeStyle = "rgba(79,124,255,.6)"; x.lineWidth = 2; x.strokeRect(48,48,904,604);
+  x.globalAlpha = 0.2;
+  [[120,120],[880,120],[140,600],[870,590]].forEach(p => {
+    x.beginPath(); x.arc(p[0],p[1],46,0,Math.PI*2);
+    x.strokeStyle = "#ff6b35"; x.lineWidth = 3; x.stroke();
+    x.beginPath(); x.arc(p[0],p[1],9,0,Math.PI*2); x.fillStyle="#f59e0b"; x.fill();
+  });
+  x.globalAlpha = 1;
+  x.textAlign = "center";
+  x.fillStyle = "#b45309"; x.font = "bold 26px Segoe UI, sans-serif";
+  x.fillText("⚗️  A S A M B A S A   L A B  ⚗️", 500, 108);
+  x.fillStyle = "#1a2340"; x.font = "bold 52px Segoe UI, sans-serif";
+  x.fillText("SERTIFIKAT DIGITAL", 500, 178);
+  x.fillStyle = "#6b7a9a"; x.font = "18px Segoe UI, sans-serif";
+  x.fillText("Diberikan kepada", 500, 236);
+  x.fillStyle = "#10b981"; x.font = "bold 46px Segoe UI, sans-serif";
+  x.fillText(name, 500, 300);
+  x.fillStyle = "#6b7a9a"; x.font = "17px Segoe UI, sans-serif";
+  x.fillText(kelas, 500, 336);
+  x.fillStyle = "#2c3a5c"; x.font = "18px Segoe UI, sans-serif";
+  x.fillText("telah berhasil menyelesaikan seluruh petualangan", 500, 392);
+  x.fillText("Teori Asam-Basa (Arrhenius, Brønsted-Lowry, dan Lewis)", 500, 420);
+  x.fillText("termasuk mengalahkan BOSS Pertarungan Akhir.", 500, 448);
+  x.fillStyle = "#f59e0b"; x.font = "bold 30px Segoe UI, sans-serif";
+  x.fillText("SKOR AKHIR: " + xp + " XP", 500, 512);
+  x.fillStyle = "#6b7a9a"; x.font = "16px Segoe UI, sans-serif";
+  x.fillText("Tanggal: " + date.toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"}), 500, 556);
+  x.fillStyle = "#4f7cff"; x.font = "italic 15px Segoe UI, sans-serif";
+  x.fillText("“Asam mendonorkan proton, basa menerimanya — dan kamu telah menguasainya.”", 500, 618);
+  return c;
+}
+
+/* =====================================================================
+   LEVEL 1 — LAB ARRHENIUS
+   ===================================================================== */
+function startLevel1(){
+  const st = newLevelState(1); App.game = st;
+  const items = shuffle(LEVEL1_ITEMS.map(i => ({...i, done:false})));
+  const stage = () => $("#game-body");
+  stage().innerHTML =
+    '<div class="lvl-head">' +
+      '<button class="icon-btn" id="g-back" style="width:34px;height:34px;font-size:13px">←</button>' +
+      '<span class="lvl-title">🧪 Level 1 — Lab Arrhenius</span>' +
+      '<div class="hearts" id="hearts">'+heartsHtml(3)+'</div>' +
+    '</div>' +
+    '<div class="card tight"><p class="small" style="margin:0"><b class="asam-t">ASAM</b> = melepas ion <b>H⁺</b> dalam air &nbsp;•&nbsp; <b class="basa-t">BASA</b> = melepas ion <b>OH⁻</b> dalam air.</p></div>' +
+    '<div class="card">' +
+      '<div class="small muted center" style="font-weight:600">Ketuk senyawa lalu ketuk keranjang (atau geser ke keranjang)</div>' +
+      '<div class="chips" id="chips"></div>' +
+      '<div class="baskets">' +
+        '<div class="basket a" data-basket="a"><div class="bt asam-t">🍋 KERANJANG ASAM<br><span class="tiny" style="font-weight:700">melepas H⁺</span></div><div class="items" id="bk-a"></div></div>' +
+        '<div class="basket b" data-basket="b"><div class="bt basa-t">🧼 KERANJANG BASA<br><span class="tiny" style="font-weight:700">melepas OH⁻</span></div><div class="items" id="bk-b"></div></div>' +
+      '</div></div>' +
+    '<div class="fstrip" id="fstrip"></div>' +
+    '<button class="btn ghost sm" id="g-ringkas" style="margin-top:14px;width:100%">📖 Lihat Ringkasan Materi</button>';
+  let selected = null;
+  function renderChips(){
+    const cont = $("#chips");
+    cont.innerHTML = items.filter(i => !i.done).map(it =>
+      '<button class="chip-item'+(selected===it.f?" sel":"")+'" data-f="'+esc(it.f)+'" draggable="true">'+esc(it.f)+'</button>').join("");
+    cont.querySelectorAll("[data-f]").forEach(b => {
+      const f = b.dataset.f;
+      b.addEventListener("click", () => { Sfx.click(); selected = (selected === f) ? null : f; renderChips(); });
+      b.addEventListener("dragstart", ev => { selected = f; ev.dataTransfer.setData("text/plain", f); ev.dataTransfer.effectAllowed = "move"; });
+    });
+  }
+  function place(f, basket){
+    const it = items.find(i => i.f === f && !i.done); if(!it) return;
+    if(it.t === basket){
+      it.done = true; st.correct++; selected = null; Sfx.correct(); addXp(st, true, false);
+      document.getElementById("bk-" + basket).innerHTML += '<span>'+esc(f)+'</span>';
+      showFeedback(true, '<div class="ttl">✅ Tepat!</div>' +
+        (basket === "a" ? '<div><b>'+esc(f)+'</b> tergolong <b>asam</b> karena dalam air melepaskan ion H⁺.</div>'
+                        : '<div><b>'+esc(f)+'</b> tergolong <b>basa</b> karena dalam air melepaskan ion OH⁻.</div>'));
+      renderChips();
+      if(items.every(i => i.done)){ setTimeout(() => levelComplete(st), 700); }
+    } else {
+      st.wrong++; st.tags["Arrhenius"] = (st.tags["Arrhenius"]||0)+1; st.streak = 0;
+      showFeedback(false,
+        '<div class="ttl">❌ Belum tepat</div>' +
+        '<div><b>'+esc(f)+'</b> bukan '+(basket==="a"?"asam":"basa")+'. ' +
+        (it.t === "a" ? 'Ciri asam Arrhenius: melepaskan ion H⁺ dalam air (misalnya HCl, H₂SO₄, CH₃COOH, HNO₃).'
+                      : 'Ciri basa Arrhenius: melepaskan ion OH⁻ dalam air (misalnya NaOH, KOH, Ca(OH)₂, Ba(OH)₂).') +
+        '</div><div class="hint">💡 Ingat rumus: asam → H⁺, basa → OH⁻.</div>');
+      const el = document.querySelector('[data-f="'+CSS.escape(f)+'"]');
+      if(el){ el.classList.add("shake"); setTimeout(()=>el.classList.remove("shake"), 380); }
+      if(loseHeart(st)) return;
+    }
+  }
+  stage().querySelectorAll("[data-basket]").forEach(b => {
+    b.addEventListener("click", () => { if(selected) place(selected, b.dataset.basket); else toast("Pilih senyawa dulu ya 👆"); });
+    b.addEventListener("dragover", ev => { ev.preventDefault(); b.classList.add("hot"); });
+    b.addEventListener("dragleave", () => b.classList.remove("hot"));
+    b.addEventListener("drop", ev => { ev.preventDefault(); b.classList.remove("hot");
+      const f = ev.dataTransfer.getData("text/plain") || selected; if(f) place(f, b.dataset.basket); });
+  });
+  $("#g-back").addEventListener("click", confirmExitLevel);
+  $("#g-ringkas").addEventListener("click", showMateriRingkas);
+  renderChips();
+}
+
+/* =====================================================================
+   LEVEL 2 — ARENA BRØNSTED-LOWRY
+   ===================================================================== */
+function startLevel2(){
+  const st = newLevelState(2); App.game = st;
+  const rxList = shuffle(LEVEL2_RX);
+  let idx = 0, phase = "acid";
+  $("#game-body").innerHTML =
+    '<div class="lvl-head">' +
+      '<button class="icon-btn" id="g-back" style="width:34px;height:34px;font-size:13px">←</button>' +
+      '<span class="lvl-title">⚔️ Level 2 — Arena Brønsted-Lowry</span>' +
+      '<div class="hearts" id="hearts">'+heartsHtml(3)+'</div>' +
+    '</div>' +
+    '<div class="card tight"><p class="small" style="margin:0"><b class="asam-t">Asam</b> = donor proton (H⁺) &nbsp;•&nbsp; <b class="basa-t">Basa</b> = akseptor proton (H⁺).</p></div>' +
+    '<div id="l2-stage"></div>' +
+    '<div class="fstrip" id="fstrip"></div>' +
+    '<button class="btn ghost sm" id="g-ringkas" style="margin-top:14px;width:100%">📖 Lihat Ringkasan Materi</button>';
+  function renderRx(){
+    if(idx >= rxList.length){ setTimeout(()=>levelComplete(st), 600); return; }
+    phase = "acid";
+    const r = rxList[idx];
+    const parts = r.eq.split(" ");
+    $("#l2-stage").innerHTML =
+      '<div class="card">' +
+        '<div class="small muted center">Reaksi '+(idx+1)+' dari '+rxList.length+'</div>' +
+        '<div class="rxn">' + parts.map(p =>
+          r.left.includes(p) ? '<button class="spec" data-sp="'+esc(p)+'">'+esc(p)+'</button>'
+                             : '<span class="op-sym">'+esc(p)+'</span>').join("") + '</div>' +
+        '<div class="center small" id="l2-inst" style="color:var(--asam);font-weight:800;line-height:1.5">👆 Ketuk spesi yang berperan sebagai ASAM (donor H⁺)</div>' +
+      '</div>';
+    $("#l2-stage").querySelectorAll("[data-sp]").forEach(b => b.addEventListener("click", () => pick(b.dataset.sp, b)));
+  }
+  function pick(sp, btn){
+    const r = rxList[idx];
+    if(phase === "acid"){
+      if(sp === r.acid){
+        btn.classList.add("ok"); Sfx.correct();
+        showFeedback(true, '<div class="ttl">✅ Benar!</div><div><b>'+esc(sp)+'</b> adalah asam karena mendonorkan proton (H⁺).</div>');
+        phase = "base"; btn.disabled = true;
+        $("#l2-inst").style.color = "#4f7cff";
+        $("#l2-inst").textContent = "👆 Sekarang ketuk spesi yang berperan sebagai BASA (akseptor H⁺)";
+      } else {
+        st.wrong++; st.tags["Bronsted-Lowry"] = (st.tags["Bronsted-Lowry"]||0)+1; st.streak = 0;
+        btn.classList.add("no"); setTimeout(()=>btn.classList.remove("no"), 700);
+        showFeedback(false,
+          '<div class="ttl">❌ Belum tepat</div>' +
+          '<div>Asam adalah spesi yang <b>mendonorkan</b> proton (H⁺). Perhatikan spesi mana yang kehilangan atom H pada produk.</div>' +
+          '<div class="hint">💡 Bandingkan reaktan dan produk: spesi yang kehilangan satu H⁺ adalah asam.</div>');
+        if(loseHeart(st)) return;
+      }
+    } else {
+      if(sp === r.base){
+        btn.classList.add("ok"); st.correct++;
+        const xp = addXp(st, true, false); Sfx.correct();
+        showFeedback(true, '<div class="ttl">✅ Tepat sekali! (+'+xp+' XP)</div><div>'+esc(r.e)+'</div>');
+        setTimeout(() => { idx++; renderRx(); hideFeedback(); }, 1350);
+      } else {
+        st.wrong++; st.tags["Bronsted-Lowry"] = (st.tags["Bronsted-Lowry"]||0)+1; st.streak = 0;
+        btn.classList.add("no"); setTimeout(()=>btn.classList.remove("no"), 700);
+        showFeedback(false,
+          '<div class="ttl">❌ Belum tepat</div>' +
+          '<div>Basa adalah spesi yang <b>menerima</b> proton (H⁺). Lihat spesi mana yang bertambah jumlah atom H-nya pada produk.</div>' +
+          '<div class="hint">💡 Akseptor H⁺ = basa. Contoh: NH₃ menerima H⁺ menjadi NH₄⁺.</div>');
+        if(loseHeart(st)) return;
+      }
+    }
+  }
+  $("#g-back").addEventListener("click", confirmExitLevel);
+  $("#g-ringkas").addEventListener("click", showMateriRingkas);
+  renderRx();
+}
+
+/* =====================================================================
+   LEVEL 3 — MISI PASANGAN KONJUGASI
+   ===================================================================== */
+function startLevel3(){
+  const st = newLevelState(3); App.game = st;
+  const pairs = shuffle(LEVEL3_PAIRS).slice(0,4);
+  let cards = [];
+  pairs.forEach((p, pi) => { cards.push({ id:pi, text:p.a, pair:p }); cards.push({ id:pi, text:p.b, pair:p }); });
+  cards = shuffle(cards);
+  let open = [], matched = 0, lock = false;
+  $("#game-body").innerHTML =
+    '<div class="lvl-head">' +
+      '<button class="icon-btn" id="g-back" style="width:34px;height:34px;font-size:13px">←</button>' +
+      '<span class="lvl-title">🔗 Level 3 — Pasangan Konjugasi</span>' +
+      '<div class="hearts" id="hearts">'+heartsHtml(3)+'</div>' +
+    '</div>' +
+    '<div class="card tight"><p class="small" style="margin:0">Pasangan konjugasi hanya berbeda <b>satu proton (H⁺)</b>. Contoh: HCl (asam) ↔ Cl⁻ (basa konjugasi).</p></div>' +
+    '<div class="card">' +
+      '<div class="small muted center">Buka dua kartu untuk mencari pasangan yang tepat</div>' +
+      '<div class="mem-grid" id="mem"></div>' +
+      '<div class="center small" style="margin-top:12px">Ditemukan: <b id="mem-count">0</b>/4</div>' +
+    '</div>' +
+    '<div class="fstrip" id="fstrip"></div>' +
+    '<button class="btn ghost sm" id="g-ringkas" style="margin-top:14px;width:100%">📖 Lihat Ringkasan Materi</button>';
+  function render(){
+    $("#mem").innerHTML = cards.map((c,i) =>
+      '<div class="mem-card'+(c.matched?" matched":"")+(c.open?" open":"")+'" data-i="'+i+'">'+esc(c.text)+'</div>').join("");
+    $("#mem").querySelectorAll("[data-i]").forEach(el => el.addEventListener("click", () => flip(parseInt(el.dataset.i,10))));
+    const mc = $("#mem-count"); if(mc) mc.textContent = matched;
+  }
+  function flip(i){
+    if(lock) return;
+    const c = cards[i]; if(c.matched || c.open) return;
+    Sfx.click(); c.open = true; open.push(i); render();
+    if(open.length === 2){
+      lock = true;
+      const [i1, i2] = open; const c1 = cards[i1], c2 = cards[i2];
+      if(c1.id === c2.id && c1.text !== c2.text){
+        setTimeout(() => {
+          c1.matched = c2.matched = true; c1.open = c2.open = false;
+          matched++; st.correct++; const xp = addXp(st, true, false); Sfx.correct();
+          showFeedback(true, '<div class="ttl">✅ Pasangan tepat! (+'+xp+' XP)</div>' +
+            '<div>'+esc(c1.pair.a)+' ↔ '+esc(c1.pair.b)+'. '+esc(c1.pair.why)+'</div>');
+          open = []; lock = false; render();
+          if(matched === 4){ setTimeout(()=>levelComplete(st), 750); }
+        }, 420);
+      } else {
+        st.wrong++; st.tags["Konjugasi"] = (st.tags["Konjugasi"]||0)+1; st.streak = 0;
+        showFeedback(false,
+          '<div class="ttl">❌ Bukan pasangan konjugasi</div>' +
+          '<div><b>'+esc(c1.text)+'</b> dan <b>'+esc(c2.text)+'</b> bukan pasangan asam-basa konjugasi.</div>' +
+          '<div class="hint">💡 Pasangan konjugasi hanya berbeda 1 ion H⁺. Contoh: H₃O⁺ ↔ H₂O, NH₄⁺ ↔ NH₃, HCl ↔ Cl⁻.</div>');
+        const fail = loseHeart(st);
+        setTimeout(() => {
+          c1.open = c2.open = false; open = []; lock = false; render();
+          if(!fail) hideFeedback();
+        }, fail ? 100 : 1050);
+      }
+    }
+  }
+  $("#g-back").addEventListener("click", confirmExitLevel);
+  $("#g-ringkas").addEventListener("click", showMateriRingkas);
+  render();
+}
+
+function startLevel4(){
+  startMcqLevel(4, "⚡ Level 4 — Dunia Lewis", LEVEL4_QS,
+    '<b class="asam-t">Asam Lewis</b> = akseptor (penerima) pasangan elektron &nbsp;•&nbsp; <b class="basa-t">Basa Lewis</b> = donor (pemberi) pasangan elektron.');
+}
+function startLevel5(){
+  startMcqLevel(5, "🕵️ Level 5 — Detektif Amfoter", LEVEL5_QS,
+    'Zat <b>amfoter/amfiprotik</b> dapat berperan sebagai asam (donor H⁺) maupun basa (akseptor H⁺). Contoh: H₂O, HCO₃⁻, HSO₄⁻.');
+}
+
+function startMcqLevel(n, title, questions, hintHtml){
+  const st = newLevelState(n); App.game = st;
+  const qs = shuffle(questions);
+  let idx = 0, answered = false;
+  $("#game-body").innerHTML =
+    '<div class="lvl-head">' +
+      '<button class="icon-btn" id="g-back" style="width:34px;height:34px;font-size:13px">←</button>' +
+      '<span class="lvl-title">'+esc(title)+'</span>' +
+      '<div class="hearts" id="hearts">'+heartsHtml(3)+'</div>' +
+    '</div>' +
+    '<div class="card tight"><p class="small" style="margin:0">'+hintHtml+'</p></div>' +
+    '<div id="mcq-stage"></div>' +
+    '<div class="fstrip" id="fstrip"></div>' +
+    '<button class="btn ghost sm" id="g-ringkas" style="margin-top:14px;width:100%">📖 Lihat Ringkasan Materi</button>';
+  function render(){
+    if(idx >= qs.length){ setTimeout(()=>levelComplete(st), 600); return; }
+    answered = false;
+    const q = qs[idx];
+    $("#mcq-stage").innerHTML =
+      '<div class="card">' +
+        '<div class="small muted center">Soal '+(idx+1)+' dari '+qs.length+'</div>' +
+        '<div class="q-text" style="margin-top:10px">'+esc(q.t)+'</div>' +
+        '<div id="mcq-opts">' + q.o.map((o,i) =>
+          '<button class="opt" data-o="'+i+'"><span class="ltr">'+"ABCD"[i]+'</span><span>'+esc(o)+'</span></button>').join("") + '</div>' +
+      '</div>';
+    $("#mcq-opts").querySelectorAll("[data-o]").forEach(b => b.addEventListener("click", () => answer(parseInt(b.dataset.o,10))));
+    hideFeedback();
+  }
+  function answer(pick){
+    if(answered) return; answered = true;
+    const q = qs[idx]; const ok = pick === q.a;
+    $("#mcq-opts").querySelectorAll(".opt").forEach((b,i) => {
+      if(i === q.a) b.classList.add("correct");
+      else if(i === pick) b.classList.add("wrong");
+      else b.classList.add("dim");
+    });
+    if(ok){
+      st.correct++; const xp = addXp(st, true, false); Sfx.correct();
+      showFeedback(true, '<div class="ttl">✅ Benar! (+'+xp+' XP)</div><div>'+esc(q.e)+'</div>');
+      setTimeout(() => { idx++; render(); }, 1600);
+    } else {
+      st.wrong++;
+      const tag = n === 4 ? "Lewis" : "Amfoter";
+      st.tags[tag] = (st.tags[tag]||0)+1; st.streak = 0; Sfx.wrong();
+      showFeedback(false, '<div class="ttl">❌ Belum tepat</div><div>'+esc(q.e)+'</div>' +
+        '<div class="hint">💡 <b>Ingat:</b> '+esc(q.h)+'</div>');
+      const fail = loseHeart(st);
+      setTimeout(() => { idx++; render(); }, fail ? 100 : 2900);
+    }
+  }
+  $("#g-back").addEventListener("click", confirmExitLevel);
+  $("#g-ringkas").addEventListener("click", showMateriRingkas);
+  render();
+}
+
+function startLevel6(){
+  const st = newLevelState(6); App.game = st;
+  const qs = shuffle(BOSS_QS).slice(0,10);
+  let idx = 0, answered = false, timer = null, timeLeft = 20;
+  $("#game-body").innerHTML =
+    '<div class="lvl-head">' +
+      '<button class="icon-btn" id="g-back" style="width:34px;height:34px;font-size:13px">←</button>' +
+      '<span class="lvl-title">👹 BOSS — Pertarungan Akhir</span>' +
+      '<div class="hearts" id="hearts">'+heartsHtml(3)+'</div>' +
+    '</div>' +
+    '<div class="card tight"><p class="small" style="margin:0">10 soal campuran dari semua teori. Waktu <b>20 detik</b> per soal. Semangat! 🔥</p></div>' +
+    '<div id="boss-stage"></div>' +
+    '<div class="fstrip" id="fstrip"></div>';
+  function stopTimer(){ if(timer){ clearInterval(timer); timer = null; } }
+  function render(){
+    if(idx >= qs.length){ stopTimer(); setTimeout(()=>levelComplete(st, true), 500); return; }
+    answered = false; timeLeft = 20;
+    const q = qs[idx];
+    $("#boss-stage").innerHTML =
+      '<div class="card">' +
+        '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">' +
+          '<span class="pill" style="background:linear-gradient(135deg,#ef4444,#a855f7);color:#fff;font-weight:800">SOAL '+(idx+1)+'/10</span>' +
+          '<span class="spacer" style="flex:1"></span>' +
+          '<span class="small" id="boss-time" style="font-weight:800;color:var(--warn)">⏱ 20s</span>' +
+        '</div>' +
+        '<div class="timer"><i id="boss-bar" style="width:100%"></i></div>' +
+        '<div class="q-text">'+esc(q.t)+'</div>' +
+        '<div id="boss-opts">' + q.o.map((o,i) =>
+          '<button class="opt" data-o="'+i+'"><span class="ltr">'+"ABCD"[i]+'</span><span>'+esc(o)+'</span></button>').join("") + '</div>' +
+      '</div>';
+    $("#boss-opts").querySelectorAll("[data-o]").forEach(b => b.addEventListener("click", () => answer(parseInt(b.dataset.o,10), false)));
+    hideFeedback();
+    stopTimer();
+    timer = setInterval(() => {
+      timeLeft--;
+      const tEl = $("#boss-time"), bEl = $("#boss-bar");
+      if(tEl) tEl.textContent = "⏱ " + Math.max(0,timeLeft) + "s";
+      if(bEl) bEl.style.width = (Math.max(0,timeLeft)/20*100) + "%";
+      if(timeLeft <= 5 && timeLeft > 0) Sfx.tick();
+      if(timeLeft <= 0){ stopTimer(); answer(-1, true); }
+    }, 1000);
+  }
+  function answer(pick, timeout){
+    if(answered) return; answered = true; stopTimer();
+    const q = qs[idx]; const ok = !timeout && pick === q.a;
+    $("#boss-opts").querySelectorAll(".opt").forEach((b,i) => {
+      if(i === q.a) b.classList.add("correct");
+      else if(i === pick) b.classList.add("wrong");
+      else b.classList.add("dim");
+    });
+    if(ok){
+      st.correct++;
+      const fast = timeLeft >= 10;
+      const xp = addXp(st, true, fast); Sfx.correct();
+      showFeedback(true, '<div class="ttl">✅ Benar! (+'+xp+' XP'+(fast?' • bonus cepat ⚡':'')+')</div><div>'+esc(q.e)+'</div>');
+      setTimeout(() => { idx++; render(); }, 1500);
+    } else {
+      st.wrong++; st.tags["Campuran"] = (st.tags["Campuran"]||0)+1; st.streak = 0; Sfx.wrong();
+      showFeedback(false, '<div class="ttl">'+(timeout?"⏰ Waktu habis!":"❌ Belum tepat")+'</div><div>'+esc(q.e)+'</div>' +
+        '<div class="hint">💡 <b>Ingat:</b> '+esc(q.h)+'</div>');
+      const fail = loseHeart(st);
+      setTimeout(() => { idx++; render(); }, fail ? 100 : 2900);
+    }
+  }
+  $("#g-back").addEventListener("click", confirmExitLevel);
+  render();
+}
+
+function confirmExitLevel(){
+  openModal(
+    '<div class="m-hd"><span class="t">🚪 Keluar dari Level?</span></div>' +
+    '<p>Progres level ini akan hilang. Kamu bisa memulainya lagi dari peta level.</p>' +
+    '<div class="btn-row" style="margin-top:16px">' +
+      '<button class="btn ghost" id="m-cancel">Lanjut Bermain</button>' +
+      '<button class="btn danger" id="m-confirm">Keluar</button>' +
+    '</div>');
+  $("#m-cancel").addEventListener("click", closeModal);
+  $("#m-confirm").addEventListener("click", () => { closeModal(); App.game = null; renderGameHome(); showScreen("game"); });
+}
+
+function startLevel(n){
+  Sfx.click(); showScreen("game");
+  if(n === 1) startLevel1();
+  else if(n === 2) startLevel2();
+  else if(n === 3) startLevel3();
+  else if(n === 4) startLevel4();
+  else if(n === 5) startLevel5();
+  else if(n === 6) startLevel6();
+}
+
+/* =====================================================================
+   BAGIAN 17 — PERINGKAT
+   ===================================================================== */
+function allUsersSorted(){
+  const arr = Object.keys(DB.students).map(k => ensureProgress(DB.students[k]));
+  Object.keys(DB.teachers).forEach(k => arr.push(ensureProgress(DB.teachers[k])));
+  return arr.sort((a,b) => {
+    if((b.xp||0) !== (a.xp||0)) return (b.xp||0) - (a.xp||0);
+    if(quizTotal(b) !== quizTotal(a)) return quizTotal(b) - quizTotal(a);
+    return (a.name||"").localeCompare(b.name||"");
+  });
+}
+
+function renderRank(){
+  const list = allUsersSorted();
+  const me = currentUser();
+  let html =
+    '<div class="card"><h2>🏆 Peringkat</h2>' +
+      '<p class="small muted">Peringkat berdasarkan <b>total XP</b> (dari kuis &amp; petualangan) semua pengguna yang sudah masuk. Total: <b>'+list.length+'</b>.</p>' +
+    '</div>';
+  if(!list.length){
+    html += '<div class="card center"><p class="muted">Belum ada yang masuk.</p></div>';
+    $("#rank-body").innerHTML = html; return;
+  }
+  const top3 = list.slice(0,3);
+  html += '<div class="card"><h2>🥇 Tiga Teratas</h2>';
+  top3.forEach((s,i) => {
+    const medal = ["🥇","🥈","🥉"][i];
+    const isT = s.isTeacher;
+    html +=
+      '<div class="rank-row'+(me && s === me ? " me":"")+'">' +
+        '<div class="pos g'+(i+1)+'">'+medal+'</div>' +
+        '<div class="nm"><div class="n">'+esc(s.name)+(isT?' <span class="tiny" style="color:#4f7cff">👨‍🏫</span>':'')+'</div>' +
+          '<div class="c">'+(s.classId ? esc(s.classId) : 'Guru Kimia')+' • Kuis '+quizTotal(s)+'/16 • '+gameStars(s)+'⭐</div></div>' +
+        '<div class="xp">'+s.xp+' XP</div>' +
+      '</div>';
+  });
+  html += '</div>';
+  html += '<div class="card"><h2>📋 Peringkat Lengkap</h2>';
+  list.forEach((s,i) => {
+    const pl = playerLevel(s.xp || 0);
+    const isT = s.isTeacher;
+    html +=
+      '<div class="rank-row'+(me && s === me ? " me":"")+'">' +
+        '<div class="pos'+(i<3?" g"+(i+1):"")+'">'+(i+1)+'</div>' +
+        '<div class="nm">' +
+          '<div class="n">'+esc(s.name)+(me && s===me ? ' <span class="tiny" style="color:var(--asam)">(kamu)</span>':'')+(isT?' <span class="tiny" style="color:#4f7cff">👨‍🏫</span>':'')+'</div>' +
+          '<div class="c">'+(s.classId ? esc(s.classId) : 'Guru Kimia')+' • '+pl.cur.icon+' '+pl.cur.name+'</div>' +
+        '</div>' +
+        '<div class="xp">'+s.xp+' XP</div>' +
+      '</div>';
+  });
+  html += '</div>';
+  $("#rank-body").innerHTML = html;
+}
+
+/* =====================================================================
+   BAGIAN 18 — HALAMAN GURU (Hasil Pekerjaan + Ranking per Kelas)
+   ===================================================================== */
+function renderTeacher(){
+  if(App.role !== "teacher"){ go("teacher"); return; }
+
+  // Tab kelas aktif
+  if(!App.teacherClass) App.teacherClass = CLASSES[0];
+  const activeClass = App.teacherClass;
+
+  // Ambil siswa dari kelas aktif
+  const studentsInClass = Object.keys(DB.students)
+    .map(k => ensureProgress(DB.students[k]))
+    .filter(s => s.classId === activeClass);
+
+  // Urutkan peringkat (dalam kelas): XP desc, lalu kuis
+  const ranked = studentsInClass.slice().sort((a,b) => {
+    if((b.xp||0) !== (a.xp||0)) return (b.xp||0) - (a.xp||0);
+    if(quizTotal(b) !== quizTotal(a)) return quizTotal(b) - quizTotal(a);
+    return (a.absen||0) - (b.absen||0);
+  });
+
+  // Hasil pekerjaan: urut berdasarkan absen
+  const byAbsen = studentsInClass.slice().sort((a,b) => (a.absen||0) - (b.absen||0));
+
+  // Statistik kelas
+  const totalSiswa = ROSTER[activeClass] ? ROSTER[activeClass].length : 0;
+  const sudahMasuk = studentsInClass.length;
+  const sudahKuis = studentsInClass.filter(s => quizTotal(s) > 0).length;
+  const sudahGame = studentsInClass.filter(s => Object.keys(s.game && s.game.levels || {}).length > 0).length;
+  const totalXpKelas = studentsInClass.reduce((a,s) => a + (s.xp||0), 0);
+
+  let html =
+    '<div class="card">' +
+      '<h2>📊 Dashboard Guru</h2>' +
+      '<p class="small muted">Pantau hasil pekerjaan dan peringkat setiap kelas.</p>' +
+    '</div>' +
+
+    // Tabs kelas
+    '<div class="class-tabs">' +
+      CLASSES.map(c =>
+        '<button data-class="'+esc(c)+'"'+(c===activeClass?' class="active"':'')+'>'+esc(c)+'</button>'
+      ).join("") +
+    '</div>' +
+
+    // Statistik kelas aktif
+    '<div class="stat-grid">' +
+      '<div class="stat"><span class="ic">👥</span><div class="v">'+sudahMasuk+'<small>/'+totalSiswa+'</small></div><div class="k">SISWA SUDAH MASUK</div></div>' +
+      '<div class="stat"><span class="ic">📝</span><div class="v">'+sudahKuis+'</div><div class="k">SUDAH KERJAKAN KUIS</div></div>' +
+      '<div class="stat"><span class="ic">🎮</span><div class="v">'+sudahGame+'</div><div class="k">SUDAH MAIN GAME</div></div>' +
+      '<div class="stat"><span class="ic">⭐</span><div class="v">'+totalXpKelas+'</div><div class="k">TOTAL XP KELAS</div></div>' +
+    '</div>' +
+
+    // Hasil pekerjaan siswa
+    '<div class="card">' +
+      '<h2>📋 Hasil Pekerjaan Siswa</h2>' +
+      (byAbsen.length === 0
+        ? '<p class="small muted">Belum ada siswa dari kelas ini yang masuk ke web.</p>'
+        : '<div class="scroll-x"><table class="tbl">' +
+            '<thead><tr><th>Absen</th><th>Nama</th><th>Kuis</th><th>⭐</th><th>XP</th></tr></thead>' +
+            '<tbody>' +
+              byAbsen.map(s =>
+                '<tr>' +
+                  '<td><b>'+(s.absen||"-")+'</b></td>' +
+                  '<td>'+esc(s.name)+'</td>' +
+                  '<td><b>'+quizTotal(s)+'</b><span class="tiny muted">/16</span></td>' +
+                  '<td>'+gameStars(s)+'<span class="tiny muted">/18</span></td>' +
+                  '<td style="color:var(--warn);font-weight:800">'+s.xp+'</td>' +
+                '</tr>'
+              ).join("") +
+            '</tbody>' +
+          '</table></div>'
+      ) +
+    '</div>' +
+
+    // Peringkat kelas aktif
+    '<div class="card">' +
+      '<h2>🏆 Peringkat Kelas '+esc(activeClass)+'</h2>' +
+      (ranked.length === 0
+        ? '<p class="small muted">Belum ada data peringkat.</p>'
+        : ranked.map((s,i) => {
+            const medal = i===0?"🥇":i===1?"🥈":i===2?"🥉":null;
+            const gClass = i<3 ? " g"+(i+1) : "";
+            return '<div class="rank-row">' +
+              '<div class="pos'+gClass+'">'+(medal || (i+1))+'</div>' +
+              '<div class="nm"><div class="n">'+esc(s.name)+'</div>' +
+                '<div class="c">Absen '+(s.absen||"-")+' • Kuis '+quizTotal(s)+'/16 • '+gameStars(s)+'⭐</div></div>' +
+              '<div class="xp">'+s.xp+' XP</div>' +
+            '</div>';
+          }).join("")
+      ) +
+    '</div>';
+
+  $("#teacher-body").innerHTML = html;
+
+  // Event tab kelas
+  $("#teacher-body").querySelectorAll("[data-class]").forEach(b => {
+    b.addEventListener("click", () => {
+      App.teacherClass = b.dataset.class;
+      renderTeacher();
+    });
+  });
+}
+
+/* =====================================================================
+   BAGIAN 19 — STARTUP
+   ===================================================================== */
+(function startup(){
+  renderMateri();
+  if(restoreSession()){
+    updateNav();
+    if(App.role === "teacher") go("teacher");
+    else go("home");
+  } else {
+    showScreen("login");
+  }
+  document.addEventListener("contextmenu", e => {
+    if(e.target.closest(".mem-card, .chip-item, .spec")) e.preventDefault();
+  });
+})();
+</script>
+</body>
+</html>
