@@ -63,10 +63,7 @@ html,body{
 .card li{margin-bottom:5px;}
 .card li b{color:#db2777;}
 
-/* Teori box */
-.teori-tabs{
-  display:flex;gap:6px;margin-top:10px;margin-bottom:10px;
-}
+.teori-tabs{display:flex;gap:6px;margin-top:10px;margin-bottom:10px;}
 .teori-tab{
   flex:1;text-align:center;padding:9px 6px;border-radius:12px;
   border:2px solid rgba(139,92,246,.35);background:#fff;cursor:pointer;
@@ -89,9 +86,7 @@ html,body{
   font-size:12.5px;line-height:1.6;color:#334155;font-weight:700;
 }
 .teori-content .intro-box b{color:#0e7490;}
-.teori-list{
-  list-style:none;padding:0;margin:0;
-}
+.teori-list{list-style:none;padding:0;margin:0;}
 .teori-list li{
   background:#fff;border-left:5px solid;
   border-radius:10px;padding:8px 11px;margin-bottom:6px;
@@ -104,13 +99,10 @@ html,body{
   padding:1px 7px;border-radius:6px;color:#0e7490;
   font-weight:900;margin-right:4px;font-size:11.5px;
 }
-/* Kuat */
 .t-kuat li{border-color:#22c55e;}
 .t-kuat li b{color:#15803d;}
-/* Lemah */
 .t-lemah li{border-color:#f59e0b;}
 .t-lemah li b{color:#b45309;}
-/* Non */
 .t-non li{border-color:#ef4444;}
 .t-non li b{color:#b91c1c;}
 
@@ -290,7 +282,7 @@ html,body{
   color:#be185d;text-align:center;}
 .section-sub{font-size:12px;color:#7c3aed;font-weight:800;text-align:center;margin:0 0 6px;}
 
-/* ============ SERTIFIKAT (HANYA SERTIFIKAT + 2 TOMBOL) ============ */
+/* ============ SERTIFIKAT ============ */
 #scr-sertifikat{
   background:
     radial-gradient(circle at 50% 0%, rgba(253,224,71,.6), transparent 55%),
@@ -322,7 +314,8 @@ html,body{
 .cert-inner h2{
   font-family:'Baloo 2',cursive;font-size:28px;margin:2px 0 0;letter-spacing:3px;
   background:linear-gradient(90deg,#f59e0b,#ec4899 50%,#8b5cf6);
-  -webkit-background-clip:text;background-clip:text;color:transparent;position:relative;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  position:relative;
 }
 .cert-sub{font-size:10.5px;color:#7c3aed;font-weight:900;margin:0 0 14px;letter-spacing:.6px;position:relative;}
 .cert-label{font-size:11px;color:#64748b;font-weight:800;margin:0;position:relative;}
@@ -359,7 +352,6 @@ html,body{
 .cert-teacher .nm{font-family:'Baloo 2',cursive;font-size:16px;color:#be185d;}
 .cert-date{font-size:10.5px;color:#64748b;font-weight:800;margin:8px 0 0;position:relative;}
 
-/* Tombol halaman sertifikat */
 #scr-sertifikat .btn{margin-top:14px;}
 
 ::-webkit-scrollbar{width:6px;height:6px}
@@ -379,12 +371,12 @@ html,body{
 <body>
 <div id="app">
 
-  <!-- ============ 1. HALAMAN AWAL (dengan menu TEORI) ============ -->
+  <!-- ============ 1. HALAMAN AWAL ============ -->
   <section id="scr-intro" class="screen show">
     <div class="brand">
       <div class="flask">⚗️</div>
       <h1>LAB DETEKTIF ELEKTROLIT</h1>
-      <p>Petualangan Virtual · Kimia Kelas XI</p>
+      <p>Petualangan Virtual ala Roblox · Kimia Kelas X</p>
     </div>
 
     <div class="card cyan">
@@ -392,7 +384,6 @@ html,body{
       <p>Murid mampu <b>mengklasifikasikan</b> dan <b>membedakan</b> larutan elektrolit dan non-elektrolit berdasarkan daya hantar listriknya.</p>
     </div>
 
-    <!-- ===== MENU TEORI ===== -->
     <div class="card violet">
       <h2>📚 Teori Dasar & Contoh Larutan</h2>
       <div class="teori-tabs">
@@ -401,7 +392,6 @@ html,body{
         <button class="teori-tab" data-tab="non">🚫 Non</button>
       </div>
 
-      <!-- Kuat -->
       <div class="teori-content active" id="tab-kuat">
         <div class="intro-box">
           <span class="info-badge kuat">ELEKTROLIT KUAT</span>
@@ -416,7 +406,6 @@ html,body{
         </ul>
       </div>
 
-      <!-- Lemah -->
       <div class="teori-content" id="tab-lemah">
         <div class="intro-box">
           <span class="info-badge lemah">ELEKTROLIT LEMAH</span>
@@ -431,7 +420,6 @@ html,body{
         </ul>
       </div>
 
-      <!-- Non -->
       <div class="teori-content" id="tab-non">
         <div class="intro-box">
           <span class="info-badge non">NON-ELEKTROLIT</span>
@@ -539,13 +527,13 @@ html,body{
     <div id="kritisBox" style="margin-top:14px;"></div>
   </section>
 
-  <!-- ============ 4. SERTIFIKAT (HANYA SERTIFIKAT + 2 TOMBOL) ============ -->
+  <!-- ============ 4. SERTIFIKAT ============ -->
   <section id="scr-sertifikat" class="screen">
     <div class="cert" id="certToPrint">
       <div class="cert-inner">
         <div class="cert-seal">🏅</div>
         <p class="cert-school">SMA SANTO PAULUS PONTIANAK</p>
-        <h2>SERTIFIKAT</h2>
+        <h2 class="cert-title">SERTIFIKAT</h2>
         <p class="cert-sub">PENGHARGAAN PENYELESAIAN GAMIFIKASI KIMIA</p>
         <p class="cert-label">Diberikan dengan bangga kepada</p>
         <div class="cert-name" id="certNama">Nama Siswa</div>
@@ -554,8 +542,14 @@ html,body{
           mampu mengklasifikasikan serta membedakan larutan elektrolit dan non-elektrolit dengan baik.
         </p>
         <div class="cert-score">
-          <div><span>NILAI</span><strong id="certNilai">0</strong></div>
-          <div class="grade"><span>PREDIKAT</span><strong id="certGrade">-</strong></div>
+          <div>
+            <span>NILAI</span>
+            <strong id="certNilai" class="score-nilai">0</strong>
+          </div>
+          <div class="grade">
+            <span>PREDIKAT</span>
+            <strong id="certGrade" class="score-grade">-</strong>
+          </div>
         </div>
         <div class="cert-teacher">
           <span class="lbl">GURU KIMIA</span>
@@ -570,14 +564,13 @@ html,body{
   </section>
 </div>
 
-<!-- Libraries via CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <script>
 /* =========================================================
-   DATA LARUTAN (10 gelas)
+   DATA LARUTAN
    ========================================================= */
 const SOLUSI = [
   { id:0, nama:'Asam Klorida', rumus:'HCl', tipe:'kuat', warna:0xbfe8ff,
@@ -717,7 +710,7 @@ const Sound = {
 /* =========================================================
    STATE & localStorage
    ========================================================= */
-const STORE_KEY = 'labDetektifElektrolit_v4';
+const STORE_KEY = 'labDetektifElektrolit_v5';
 const state = {
   nama:'', avatar:'perempuan',
   poinPraktikum:0, poinKritis:0, totalPoin:0,
@@ -1655,11 +1648,61 @@ document.getElementById('btnUnduh').addEventListener('click', async () => {
 
   try{
     const cert = document.getElementById('certToPrint');
+
+    // Pastikan font sudah termuat sebelum capture
+    if(document.fonts && document.fonts.ready){
+      try{ await document.fonts.ready; }catch(e){}
+    }
+
     const canvas = await html2canvas(cert, {
       scale: Math.min(window.devicePixelRatio || 1, 2),
       backgroundColor:'#ffffff',
       useCORS:true,
-      logging:false
+      allowTaint:true,
+      logging:false,
+      // FIX PENTING: paksa warna solid pada elemen gradient text
+      onclone: (clonedDoc) => {
+        // 1) Judul SERTIFIKAT
+        const h2 = clonedDoc.querySelector('.cert-inner h2, .cert-title');
+        if(h2){
+          h2.style.background = 'none';
+          h2.style.webkitBackgroundClip = 'initial';
+          h2.style.backgroundClip = 'initial';
+          h2.style.webkitTextFillColor = '#d946ef';
+          h2.style.color = '#d946ef';
+        }
+        // 2) Nilai (angka) — gunakan warna solid teal
+        const nilaiEl = clonedDoc.querySelector('.score-nilai, #certNilai');
+        if(nilaiEl){
+          nilaiEl.style.background = 'none';
+          nilaiEl.style.webkitBackgroundClip = 'initial';
+          nilaiEl.style.backgroundClip = 'initial';
+          nilaiEl.style.webkitTextFillColor = '#0891b2';
+          nilaiEl.style.color = '#0891b2';
+          nilaiEl.style.fontWeight = '800';
+        }
+        // 3) Predikat (A/B/C) — gunakan warna solid pink
+        const gradeEl = clonedDoc.querySelector('.score-grade, #certGrade');
+        if(gradeEl){
+          gradeEl.style.background = 'none';
+          gradeEl.style.webkitBackgroundClip = 'initial';
+          gradeEl.style.backgroundClip = 'initial';
+          gradeEl.style.webkitTextFillColor = '#db2777';
+          gradeEl.style.color = '#db2777';
+          gradeEl.style.fontWeight = '800';
+        }
+        // 4) Fallback: semua strong di dalam .cert-score
+        clonedDoc.querySelectorAll('.cert-score strong').forEach(el => {
+          if(!el.style.color || el.style.color === 'transparent'){
+            const isGrade = el.closest('.grade');
+            el.style.background = 'none';
+            el.style.webkitBackgroundClip = 'initial';
+            el.style.backgroundClip = 'initial';
+            el.style.webkitTextFillColor = isGrade ? '#db2777' : '#0891b2';
+            el.style.color = isGrade ? '#db2777' : '#0891b2';
+          }
+        });
+      }
     });
 
     const imgData = canvas.toDataURL('image/png');
