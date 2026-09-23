@@ -24,7 +24,6 @@ html,body{
   background:#e0f2fe;box-shadow:0 0 60px rgba(139,92,246,.22);
 }
 
-/* ============ SCREENS ============ */
 .screen{position:absolute;inset:0;display:none;flex-direction:column;
   overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;}
 .screen.show{display:flex;}
@@ -56,12 +55,72 @@ html,body{
 .card.pink{border-color:rgba(236,72,153,.5);}
 .card.cyan{border-color:rgba(6,182,212,.5);}
 .card.lime{border-color:rgba(132,204,22,.55);}
+.card.violet{border-color:rgba(139,92,246,.5);}
 .card h2{font-family:'Baloo 2',cursive;font-size:15.5px;margin:0 0 7px;color:#7c3aed;
   display:flex;align-items:center;gap:7px;}
 .card p,.card li{font-size:12.8px;line-height:1.62;color:#334155;margin:0;}
 .card ol,.card ul{margin:0;padding-left:18px;}
 .card li{margin-bottom:5px;}
 .card li b{color:#db2777;}
+
+/* Teori box */
+.teori-tabs{
+  display:flex;gap:6px;margin-top:10px;margin-bottom:10px;
+}
+.teori-tab{
+  flex:1;text-align:center;padding:9px 6px;border-radius:12px;
+  border:2px solid rgba(139,92,246,.35);background:#fff;cursor:pointer;
+  font-size:11.5px;font-weight:900;color:#475569;transition:.18s;
+  font-family:inherit;
+}
+.teori-tab:active{transform:scale(.97);}
+.teori-tab.active{
+  background:linear-gradient(95deg,#a78bfa,#ec4899);
+  color:#fff;border-color:#8b5cf6;
+  box-shadow:0 6px 16px rgba(139,92,246,.35);
+}
+.teori-content{display:none;animation:fadein .3s;}
+.teori-content.active{display:block;}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.teori-content .intro-box{
+  background:linear-gradient(135deg,#ecfeff,#fef3c7);
+  border:2px solid rgba(6,182,212,.4);
+  border-radius:14px;padding:10px 12px;margin-bottom:10px;
+  font-size:12.5px;line-height:1.6;color:#334155;font-weight:700;
+}
+.teori-content .intro-box b{color:#0e7490;}
+.teori-list{
+  list-style:none;padding:0;margin:0;
+}
+.teori-list li{
+  background:#fff;border-left:5px solid;
+  border-radius:10px;padding:8px 11px;margin-bottom:6px;
+  font-size:12.3px;line-height:1.5;color:#334155;font-weight:700;
+  box-shadow:0 2px 6px rgba(139,92,246,.08);
+}
+.teori-list li b{font-weight:900;}
+.teori-list li .rumus{
+  display:inline-block;background:rgba(6,182,212,.14);
+  padding:1px 7px;border-radius:6px;color:#0e7490;
+  font-weight:900;margin-right:4px;font-size:11.5px;
+}
+/* Kuat */
+.t-kuat li{border-color:#22c55e;}
+.t-kuat li b{color:#15803d;}
+/* Lemah */
+.t-lemah li{border-color:#f59e0b;}
+.t-lemah li b{color:#b45309;}
+/* Non */
+.t-non li{border-color:#ef4444;}
+.t-non li b{color:#b91c1c;}
+
+.info-badge{
+  display:inline-block;padding:3px 9px;border-radius:8px;
+  font-size:10.5px;font-weight:900;letter-spacing:.4px;margin-right:6px;
+}
+.info-badge.kuat{background:#dcfce7;color:#15803d;}
+.info-badge.lemah{background:#fef3c7;color:#b45309;}
+.info-badge.non{background:#fee2e2;color:#b91c1c;}
 
 #inpNama{
   width:100%;margin-top:9px;padding:13px 14px;border-radius:14px;
@@ -166,7 +225,6 @@ html,body{
 }
 #toast.show{opacity:1;transform:translate(-50%,-50%) scale(1);}
 
-/* Modal */
 #modal{
   position:absolute;inset:0;display:none;align-items:center;justify-content:center;
   padding:16px;background:rgba(196,181,253,.5);backdrop-filter:blur(7px);z-index:70;
@@ -232,7 +290,7 @@ html,body{
   color:#be185d;text-align:center;}
 .section-sub{font-size:12px;color:#7c3aed;font-weight:800;text-align:center;margin:0 0 6px;}
 
-/* ============ SERTIFIKAT ============ */
+/* ============ SERTIFIKAT (HANYA SERTIFIKAT + 2 TOMBOL) ============ */
 #scr-sertifikat{
   background:
     radial-gradient(circle at 50% 0%, rgba(253,224,71,.6), transparent 55%),
@@ -248,7 +306,7 @@ html,body{
 }
 .cert-inner{
   background:linear-gradient(170deg,#fffbeb,#ffffff 45%,#fef3c7);
-  border-radius:20px;padding:20px 16px 18px;text-align:center;
+  border-radius:20px;padding:22px 16px 20px;text-align:center;
   position:relative;overflow:hidden;
 }
 .cert-inner::before{
@@ -259,23 +317,23 @@ html,body{
     radial-gradient(circle at 100% 100%,rgba(6,182,212,.14),transparent 45%);
   pointer-events:none;
 }
-.cert-seal{font-size:44px;line-height:1;filter:drop-shadow(0 6px 14px rgba(251,191,36,.7));position:relative;}
+.cert-seal{font-size:46px;line-height:1;filter:drop-shadow(0 6px 14px rgba(251,191,36,.7));position:relative;}
 .cert-school{font-size:11px;font-weight:900;letter-spacing:1.8px;color:#dc2626;margin:8px 0 2px;position:relative;}
 .cert-inner h2{
-  font-family:'Baloo 2',cursive;font-size:26px;margin:2px 0 0;letter-spacing:3px;
+  font-family:'Baloo 2',cursive;font-size:28px;margin:2px 0 0;letter-spacing:3px;
   background:linear-gradient(90deg,#f59e0b,#ec4899 50%,#8b5cf6);
   -webkit-background-clip:text;background-clip:text;color:transparent;position:relative;
 }
 .cert-sub{font-size:10.5px;color:#7c3aed;font-weight:900;margin:0 0 14px;letter-spacing:.6px;position:relative;}
 .cert-label{font-size:11px;color:#64748b;font-weight:800;margin:0;position:relative;}
 .cert-name{
-  font-family:'Baloo 2',cursive;font-size:24px;margin:6px 0 10px;color:#be185d;
+  font-family:'Baloo 2',cursive;font-size:25px;margin:6px 0 10px;color:#be185d;
   border-bottom:2.5px dashed rgba(236,72,153,.5);display:inline-block;
   padding:0 16px 8px;position:relative;
 }
-.cert-desc{font-size:11.5px;color:#475569;font-weight:700;line-height:1.65;margin:6px 12px 14px;position:relative;}
+.cert-desc{font-size:11.5px;color:#475569;font-weight:700;line-height:1.65;margin:6px 12px 16px;position:relative;}
 .cert-desc b{color:#7c3aed;}
-.cert-score{display:flex;gap:10px;justify-content:center;margin-bottom:14px;position:relative;}
+.cert-score{display:flex;gap:10px;justify-content:center;margin-bottom:16px;position:relative;}
 .cert-score>div{
   flex:1;max-width:132px;background:#fff;
   border:2.5px solid rgba(139,92,246,.45);border-radius:16px;padding:10px 6px;
@@ -293,41 +351,35 @@ html,body{
   -webkit-background-clip:text;background-clip:text;color:transparent;
 }
 .cert-teacher{
-  margin:12px 8px 6px;padding-top:12px;
+  margin:14px 8px 8px;padding-top:12px;
   border-top:1.5px dashed rgba(139,92,246,.4);
   position:relative;text-align:center;
 }
 .cert-teacher .lbl{display:block;font-size:9.5px;color:#7c3aed;font-weight:900;letter-spacing:1.2px;margin-bottom:3px;}
 .cert-teacher .nm{font-family:'Baloo 2',cursive;font-size:16px;color:#be185d;}
-.cert-date{font-size:10.5px;color:#64748b;font-weight:800;margin:6px 0 0;position:relative;}
+.cert-date{font-size:10.5px;color:#64748b;font-weight:800;margin:8px 0 0;position:relative;}
 
-.mini-stats{display:flex;gap:8px;width:100%;margin-top:14px;}
-.mini-stat{
-  flex:1;background:rgba(255,255,255,.9);border:2px solid rgba(139,92,246,.35);
-  border-radius:14px;padding:8px 6px;text-align:center;
-}
-.mini-stat span{display:block;font-size:9.5px;color:#7c3aed;font-weight:900;letter-spacing:.5px;}
-.mini-stat b{display:block;font-family:'Baloo 2',cursive;font-size:17px;color:#0891b2;margin-top:2px;}
-
-.json-box{
-  width:100%;margin-top:12px;background:rgba(255,255,255,.92);
-  border:2px solid rgba(139,92,246,.35);border-radius:15px;padding:11px 13px;
-}
-.json-box h4{margin:0 0 6px;font-size:11.5px;color:#7c3aed;letter-spacing:.8px;font-weight:900;}
-.json-box pre{
-  margin:0;font-size:10px;line-height:1.5;color:#0f766e;max-height:150px;
-  overflow:auto;font-family:ui-monospace,Menlo,monospace;white-space:pre-wrap;
-  word-break:break-all;
-}
+/* Tombol halaman sertifikat */
+#scr-sertifikat .btn{margin-top:14px;}
 
 ::-webkit-scrollbar{width:6px;height:6px}
 ::-webkit-scrollbar-thumb{background:rgba(236,72,153,.4);border-radius:4px}
+
+@media print{
+  html,body{background:#fff !important;overflow:visible !important;height:auto !important;}
+  body *{visibility:hidden !important;}
+  #scr-sertifikat, #scr-sertifikat *{visibility:visible !important;}
+  #scr-sertifikat{position:absolute !important;left:0;top:0;width:100%;padding:0 !important;
+    background:#fff !important;overflow:visible !important;height:auto !important;}
+  .cert{box-shadow:none !important;margin:0 auto !important;max-width:520px;}
+  #scr-sertifikat .btn{display:none !important;}
+}
 </style>
 </head>
 <body>
 <div id="app">
 
-  <!-- ============ 1. HALAMAN AWAL ============ -->
+  <!-- ============ 1. HALAMAN AWAL (dengan menu TEORI) ============ -->
   <section id="scr-intro" class="screen show">
     <div class="brand">
       <div class="flask">⚗️</div>
@@ -338,6 +390,65 @@ html,body{
     <div class="card cyan">
       <h2>🎯 Tujuan Pembelajaran</h2>
       <p>Murid mampu <b>mengklasifikasikan</b> dan <b>membedakan</b> larutan elektrolit dan non-elektrolit berdasarkan daya hantar listriknya.</p>
+    </div>
+
+    <!-- ===== MENU TEORI ===== -->
+    <div class="card violet">
+      <h2>📚 Teori Dasar & Contoh Larutan</h2>
+      <div class="teori-tabs">
+        <button class="teori-tab active" data-tab="kuat">⚡ Kuat</button>
+        <button class="teori-tab" data-tab="lemah">💧 Lemah</button>
+        <button class="teori-tab" data-tab="non">🚫 Non</button>
+      </div>
+
+      <!-- Kuat -->
+      <div class="teori-content active" id="tab-kuat">
+        <div class="intro-box">
+          <span class="info-badge kuat">ELEKTROLIT KUAT</span>
+          <b>Terionisasi sempurna (α = 1)</b> dalam air. Menghasilkan <b>banyak ion</b>, sehingga lampu menyala <b>terang</b> dan muncul <b>banyak gelembung gas</b>.
+        </div>
+        <ul class="teori-list t-kuat">
+          <li><span class="rumus">HCl</span> <b>Asam Klorida</b> — asam kuat, terionisasi sempurna.</li>
+          <li><span class="rumus">NaOH</span> <b>Natrium Hidroksida</b> — basa kuat.</li>
+          <li><span class="rumus">NaCl</span> <b>Garam Dapur</b> — garam yang mudah larut & terionisasi sempurna.</li>
+          <li><span class="rumus">H₂SO₄</span> <b>Asam Sulfat</b> — asam kuat (aki kendaraan).</li>
+          <li><span class="rumus">KOH</span> <b>Kalium Hidroksida</b> — basa kuat.</li>
+        </ul>
+      </div>
+
+      <!-- Lemah -->
+      <div class="teori-content" id="tab-lemah">
+        <div class="intro-box">
+          <span class="info-badge lemah">ELEKTROLIT LEMAH</span>
+          <b>Terionisasi sebagian (0 &lt; α &lt; 1)</b> dalam air. Menghasilkan <b>sedikit ion</b>, sehingga lampu menyala <b>redup</b> atau bahkan tidak menyala, tetapi masih ada <b>sedikit gelembung gas</b>.
+        </div>
+        <ul class="teori-list t-lemah">
+          <li><span class="rumus">CH₃COOH</span> <b>Asam Cuka</b> — asam lemah, terionisasi sebagian.</li>
+          <li><span class="rumus">NH₃</span> <b>Amonia</b> — basa lemah.</li>
+          <li><span class="rumus">H₂CO₃</span> <b>Asam Karbonat</b> — asam lemah (air soda).</li>
+          <li><span class="rumus">Al(OH)₃</span> <b>Aluminium Hidroksida</b> — basa lemah.</li>
+          <li><span class="rumus">C₆H₈O₇</span> <b>Asam Sitrat</b> — asam lemah (air jeruk nipis).</li>
+        </ul>
+      </div>
+
+      <!-- Non -->
+      <div class="teori-content" id="tab-non">
+        <div class="intro-box">
+          <span class="info-badge non">NON-ELEKTROLIT</span>
+          <b>Tidak terionisasi</b> dalam air (tetap berupa <b>molekul netral</b>). <b>Tidak menghasilkan ion</b>, sehingga lampu <b>tidak menyala</b> dan <b>tidak ada gelembung</b>.
+        </div>
+        <ul class="teori-list t-non">
+          <li><span class="rumus">C₆H₁₂O₆</span> <b>Glukosa</b> — gula, larut sebagai molekul netral.</li>
+          <li><span class="rumus">CO(NH₂)₂</span> <b>Urea</b> — pupuk, tidak terionisasi.</li>
+          <li><span class="rumus">C₂H₅OH</span> <b>Etanol</b> — alkohol, molekul netral.</li>
+          <li><span class="rumus">C₁₂H₂₂O₁₁</span> <b>Sukrosa</b> — gula pasir.</li>
+          <li><span class="rumus">C₃H₈O₃</span> <b>Gliserol</b> — cairan pelembab.</li>
+        </ul>
+      </div>
+
+      <p style="margin-top:10px;font-size:11.5px;color:#7c3aed;font-weight:800;text-align:center;">
+        💡 <b>Rumus derajat ionisasi:</b> α = (jumlah mol terionisasi) / (jumlah mol mula-mula)
+      </p>
     </div>
 
     <div class="card pink">
@@ -428,9 +539,9 @@ html,body{
     <div id="kritisBox" style="margin-top:14px;"></div>
   </section>
 
-  <!-- ============ 4. SERTIFIKAT ============ -->
+  <!-- ============ 4. SERTIFIKAT (HANYA SERTIFIKAT + 2 TOMBOL) ============ -->
   <section id="scr-sertifikat" class="screen">
-    <div class="cert">
+    <div class="cert" id="certToPrint">
       <div class="cert-inner">
         <div class="cert-seal">🏅</div>
         <p class="cert-school">SMA SANTO PAULUS PONTIANAK</p>
@@ -454,24 +565,15 @@ html,body{
       </div>
     </div>
 
-    <div class="mini-stats">
-      <div class="mini-stat"><span>PRAKTIKUM</span><b id="statPraktikum">0</b></div>
-      <div class="mini-stat"><span>KRITIS</span><b id="statKritis">0</b></div>
-      <div class="mini-stat"><span>TOTAL</span><b id="statTotal">0</b></div>
-    </div>
-
-    <div class="json-box">
-      <h4>💾 DATA TERSIMPAN (localStorage · JSON)</h4>
-      <pre id="jsonPreview">-</pre>
-    </div>
-
-    <button id="btnUnduh" class="btn green">⬇️ UNDUH DATA .JSON</button>
+    <button id="btnUnduh" class="btn green">⬇️ UNDUH SERTIFIKAT PDF</button>
     <button id="btnUlang" class="btn ghost">🔄 MAIN LAGI DARI AWAL</button>
   </section>
 </div>
 
-<!-- Libraries via CDN (HTTPS) -->
+<!-- Libraries via CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <script>
 /* =========================================================
@@ -565,7 +667,7 @@ const SOAL_KRITIS = [
 ];
 
 /* =========================================================
-   SOUND SYSTEM (Web Audio API)
+   SOUND SYSTEM
    ========================================================= */
 const Sound = {
   ctx:null, enabled:true, bgTimer:null,
@@ -615,7 +717,7 @@ const Sound = {
 /* =========================================================
    STATE & localStorage
    ========================================================= */
-const STORE_KEY = 'labDetektifElektrolit_v3';
+const STORE_KEY = 'labDetektifElektrolit_v4';
 const state = {
   nama:'', avatar:'perempuan',
   poinPraktikum:0, poinKritis:0, totalPoin:0,
@@ -644,6 +746,20 @@ function showScreen(id){
   el.classList.add('show');
   el.scrollTop = 0;
 }
+
+/* =========================================================
+   TAB TEORI
+   ========================================================= */
+document.querySelectorAll('.teori-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    Sound.init(); Sound.click();
+    const target = tab.dataset.tab;
+    document.querySelectorAll('.teori-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.teori-content').forEach(c => c.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('tab-' + target).classList.add('active');
+  });
+});
 
 /* =========================================================
    AVATAR PICKER
@@ -977,7 +1093,6 @@ function buildLabEnvironment(){
     const sE = new THREE.Mesh(geo, mat); sE.position.set(ROOM_HALF - 0.03, y, 0); sE.rotation.y = -Math.PI/2; scene.add(sE);
   });
 
-  // Poster tabel periodik
   const posterMat = new THREE.MeshBasicMaterial({ map: makePeriodicPoster() });
   const poster = new THREE.Mesh(new THREE.PlaneGeometry(7, 4.4), posterMat);
   poster.position.set(-6, 3.4, -ROOM_HALF + 0.06); scene.add(poster);
@@ -985,7 +1100,6 @@ function buildLabEnvironment(){
     new THREE.MeshPhongMaterial({ color: 0xfbbf24, shininess: 60 }));
   frame.position.set(-6, 3.4, -ROOM_HALF + 0.02); scene.add(frame);
 
-  // Rambu K3
   const signs = [
     { txt:'APD WAJIB', bg:'#fef3c7', fg:'#b45309', pos:[6, 3.8, -ROOM_HALF+0.06], rotY:0 },
     { txt:'NO FOOD',   bg:'#fee2e2', fg:'#b91c1c', pos:[9, 3.8, -ROOM_HALF+0.06], rotY:0 },
@@ -999,7 +1113,6 @@ function buildLabEnvironment(){
     scene.add(m);
   });
 
-  // Fume hood
   const fumeMat = new THREE.MeshPhongMaterial({ color: 0xbfdbfe, shininess: 60 });
   const fumeFrameMat = new THREE.MeshPhongMaterial({ color: 0x1e40af, shininess: 70 });
   const fumeBase = new THREE.Mesh(new THREE.BoxGeometry(5.5, 1.0, 1.8), fumeMat);
@@ -1012,7 +1125,6 @@ function buildLabEnvironment(){
     new THREE.MeshPhongMaterial({ color: 0xc7e8ff, transparent:true, opacity:0.35, shininess:100 }));
   fumeGlass.position.set(7, 2.6, -ROOM_HALF + 1.85); scene.add(fumeGlass);
 
-  // Rak dinding dengan botol
   const shelfMat = new THREE.MeshPhongMaterial({ color: 0xfcd34d, shininess: 50 });
   const bottleColors = [0xef4444, 0x3b82f6, 0x22c55e, 0xf59e0b, 0x8b5cf6, 0xec4899, 0x06b6d4];
   function buildShelfWall(baseX, rotY){
@@ -1040,7 +1152,6 @@ function buildLabEnvironment(){
   buildShelfWall(ROOM_HALF - 0.6, -Math.PI/2);
   buildShelfWall(-ROOM_HALF + 0.6, Math.PI/2);
 
-  // Lemari bawah (dinding selatan)
   const cabMat = new THREE.MeshPhongMaterial({ color: 0x60a5fa, shininess: 50 });
   const cabTopMat = new THREE.MeshPhongMaterial({ color: 0xec4899, shininess: 50 });
   for(let i=0;i<4;i++){
@@ -1056,7 +1167,6 @@ function buildLabEnvironment(){
     }
   }
 
-  // Lampu langit-langit
   const ceilMat = new THREE.MeshBasicMaterial({ color: 0xfff9c4 });
   const ceilFrameMat = new THREE.MeshPhongMaterial({ color: 0x94a3b8, shininess: 60 });
   for(let i=0;i<3;i++) for(let j=0;j<3;j++){
@@ -1067,7 +1177,6 @@ function buildLabEnvironment(){
     frame2.position.set(fx, 8.92, fz); scene.add(frame2);
   }
 
-  // Penanda lantai
   const floorMark = new THREE.Mesh(
     new THREE.RingGeometry(1.8, 2.1, 40),
     new THREE.MeshBasicMaterial({ color: 0xf59e0b, transparent: true, opacity: 0.55, side: THREE.DoubleSide })
@@ -1524,38 +1633,66 @@ function selesaikan(){
   document.getElementById('certNama').textContent = state.nama;
   document.getElementById('certNilai').textContent = state.nilai;
   document.getElementById('certGrade').textContent = state.grade;
-  document.getElementById('statPraktikum').textContent = Math.max(0, state.poinPraktikum);
-  document.getElementById('statKritis').textContent = Math.max(0, state.poinKritis);
-  document.getElementById('statTotal').textContent = state.totalPoin;
 
   const bulan = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
   const d = new Date();
   document.getElementById('certTanggal').textContent =
     `Pontianak, ${d.getDate()} ${bulan[d.getMonth()]} ${d.getFullYear()}`;
 
-  document.getElementById('jsonPreview').textContent = JSON.stringify(state, null, 2);
-
   showScreen('scr-sertifikat');
   setTimeout(() => Sound.fanfare(), 400);
 }
 
 /* =========================================================
-   UNDUH JSON
+   UNDUH SERTIFIKAT PDF
    ========================================================= */
-document.getElementById('btnUnduh').addEventListener('click', () => {
+document.getElementById('btnUnduh').addEventListener('click', async () => {
   Sound.click();
-  const dataStr = JSON.stringify(state, null, 2);
-  const blob = new Blob([dataStr], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  const safeName = (state.nama || 'siswa').replace(/[^a-zA-Z0-9]/g, '_');
-  a.href = url;
-  a.download = `lab-elektrolit_${safeName}_${new Date().toISOString().slice(0,10)}.json`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  setTimeout(() => URL.revokeObjectURL(url), 1500);
-  showToast('✅ Data JSON berhasil diunduh!', 2000);
+  const btn = document.getElementById('btnUnduh');
+  const originalText = btn.textContent;
+  btn.textContent = '⏳ Menyiapkan PDF...';
+  btn.disabled = true;
+
+  try{
+    const cert = document.getElementById('certToPrint');
+    const canvas = await html2canvas(cert, {
+      scale: Math.min(window.devicePixelRatio || 1, 2),
+      backgroundColor:'#ffffff',
+      useCORS:true,
+      logging:false
+    });
+
+    const imgData = canvas.toDataURL('image/png');
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ orientation:'portrait', unit:'mm', format:'a4' });
+    const pageW = pdf.internal.pageSize.getWidth();
+    const pageH = pdf.internal.pageSize.getHeight();
+
+    const margin = 12;
+    const imgW = pageW - margin * 2;
+    const imgH = (canvas.height / canvas.width) * imgW;
+
+    let finalW = imgW, finalH = imgH;
+    if(finalH > pageH - margin * 2){
+      finalH = pageH - margin * 2;
+      finalW = (canvas.width / canvas.height) * finalH;
+    }
+    const x = (pageW - finalW) / 2;
+    const y = (pageH - finalH) / 2;
+    pdf.addImage(imgData, 'PNG', x, y, finalW, finalH, undefined, 'FAST');
+
+    const safeName = (state.nama || 'siswa').replace(/[^a-zA-Z0-9]/g, '_');
+    pdf.save(`Sertifikat_Elektrolit_${safeName}.pdf`);
+    showToast('✅ Sertifikat PDF berhasil diunduh!', 2200);
+    Sound.select();
+  }catch(err){
+    console.error(err);
+    showToast('Membuka dialog cetak... pilih "Save as PDF"', 2500);
+    setTimeout(() => window.print(), 400);
+  }finally{
+    btn.textContent = originalText;
+    btn.disabled = false;
+  }
 });
 
 /* =========================================================
